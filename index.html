@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda Hoquei Patins Catalunya (no oficial)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F2340;
+    --ink-2:#173257;
+    --wood:#B5651D;
+    --wood-2:#8C4E16;
+    --ice:#F2F5F4;
+    --paper:#FFFFFF;
+    --line:#DDE4E6;
+    --amber:#F2934E;
+    --amber-ink:#7A3B0F;
+    --text:#1C2733;
+    --text-soft:#5A6B78;
+    --played-bg:#EAF3EC;
+    --played-ink:#2E6B48;
+    --focus:#1E6FEB;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ice);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.45;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald',system-ui,sans-serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+
+  /* ---------- Header ---------- */
+  header.top{
+    background:linear-gradient(180deg,var(--ink) 0%,var(--ink-2) 100%);
+    color:#fff;
+    padding:22px 18px 18px;
+    border-bottom:5px solid var(--wood);
+  }
+  .top-inner{
+    max-width:980px;
+    margin:0 auto;
+  }
+  .kicker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    color:#BFD0E6;
+    margin-bottom:6px;
+  }
+  .puck{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--amber);
+    display:inline-block;
+  }
+  h1.display{
+    font-size:clamp(26px,5vw,38px);
+    margin:0 0 6px;
+    line-height:1.05;
+  }
+  .sub{
+    color:#CBD9EA;
+    font-size:14.5px;
+    max-width:640px;
+  }
+  .updated{
+    margin-top:10px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:#BFD0E6;
+    background:rgba(255,255,255,0.08);
+    padding:4px 10px;
+    border-radius:20px;
+  }
+
+  .disclaimer{
+    max-width:980px;
+    margin:14px auto 0;
+    background:#FFF6EC;
+    border:1px solid #F0D9B8;
+    color:var(--amber-ink);
+    padding:10px 14px;
+    border-radius:6px;
+    font-size:13px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .disclaimer strong{display:block; font-size:13px; margin-bottom:2px;}
+  .disclaimer .ico{font-size:16px; line-height:1;}
+
+  /* ---------- Filters ---------- */
+  .filters-wrap{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(15,35,64,0.06);
+  }
+  .filters{
+    max-width:980px;
+    margin:0 auto;
+    padding:14px 18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+  }
+  .search-box{
+    position:relative;
+    flex:1 1 220px;
+  }
+  .search-box input{
+    width:100%;
+    padding:10px 12px 10px 34px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-size:14.5px;
+    font-family:inherit;
+    background:var(--ice);
+    color:var(--text);
+  }
+  .search-box input:focus{background:#fff;}
+  .search-box::before{
+    content:"";
+    position:absolute;
+    left:11px; top:50%; transform:translateY(-50%);
+    width:15px;height:15px;
+    border:2px solid var(--text-soft);
+    border-radius:50%;
+  }
+  .search-box::after{
+    content:"";
+    position:absolute;
+    left:22px; top:62%;
+    width:7px;height:2px;
+    background:var(--text-soft);
+    transform:rotate(45deg);
+  }
+  select{
+    padding:10px 10px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:14px;
+    background:var(--ice);
+    color:var(--text);
+    max-width:190px;
+  }
+  .segmented{
+    display:flex;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .segmented button{
+    border:none;
+    background:var(--ice);
+    color:var(--text-soft);
+    padding:9px 13px;
+    font-family:'Inter';
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    border-right:1px solid var(--line);
+  }
+  .segmented button:last-child{border-right:none;}
+  .segmented button.active{
+    background:var(--ink);
+    color:#fff;
+  }
+  .reset-link{
+    background:none;
+    border:none;
+    color:var(--ink-2);
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:underline;
+    padding:6px 4px;
+  }
+
+  .meta-row{
+    max-width:980px;
+    margin:0 auto;
+    padding:10px 18px 4px;
+    font-size:13px;
+    color:var(--text-soft);
+  }
+
+  /* ---------- Results ---------- */
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:6px 18px 60px;
+  }
+  .day-group{margin-top:22px;}
+  .day-heading{
+    font-family:'Oswald';
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-2);
+    padding:6px 0;
+    border-bottom:2px solid var(--wood);
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .day-heading .count{
+    color:var(--text-soft);
+    font-weight:500;
+    text-transform:none;
+    letter-spacing:0;
+    font-family:'Inter';
+    font-size:12.5px;
+  }
+
+  .match-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    gap:4px 12px;
+    align-items:center;
+  }
+  .m-time{
+    font-family:'Oswald';
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    text-align:center;
+    background:var(--ice);
+    border-radius:6px;
+    padding:6px 2px;
+    grid-row:1 / 3;
+  }
+  .m-comp{
+    grid-column:2;
+    font-size:11.5px;
+    color:var(--text-soft);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .m-teams{
+    grid-column:2;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+    font-size:14.5px;
+    font-weight:500;
+  }
+  .m-teams .vs{color:var(--text-soft); font-size:12.5px;}
+  .m-venue{
+    grid-column:2;
+    font-size:12px;
+    color:var(--text-soft);
+    margin-top:1px;
+  }
+  .m-score{
+    grid-column:3;
+    grid-row:1/3;
+    font-family:'Oswald';
+    font-variant-numeric:tabular-nums;
+    font-weight:700;
+    font-size:18px;
+    padding:6px 12px;
+    border-radius:6px;
+    white-space:nowrap;
+  }
+  .m-score.played{background:var(--played-bg); color:var(--played-ink);}
+  .m-score.upcoming{background:#EFF3FA; color:var(--ink-2); font-size:13px; font-weight:600;}
+
+  @media (max-width:520px){
+    .match-card{grid-template-columns:48px 1fr;}
+    .m-score{grid-column:2; grid-row:auto; justify-self:start; margin-top:4px;}
+  }
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-soft);
+  }
+  .empty-state .big{font-size:34px; margin-bottom:8px;}
+
+  .load-more-wrap{
+    text-align:center;
+    margin-top:26px;
+  }
+  .load-more{
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:12px 26px;
+    border-radius:8px;
+    font-family:'Inter';
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .load-more:hover{background:var(--ink-2);}
+
+  footer{
+    max-width:980px;
+    margin:0 auto;
+    padding:20px 18px 40px;
+    font-size:12px;
+    color:var(--text-soft);
+    border-top:1px solid var(--line);
+  }
+  footer a{color:var(--ink-2); text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="kicker"><span class="puck"></span> AGENDA · TEMPORADA 2026/27</div>
+    <h1 class="display">Hoquei Patins Catalunya</h1>
+    <div class="sub">Cerca i filtra tots els partits federats de la temporada: equip, competició, pista i data, en un sol lloc.</div>
+    <div class="updated" id="updatedBadge">Carregant dades…</div>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <span class="ico">ℹ️</span>
+  <div>
+    <strong>Aquesta no és una aplicació oficial de la FECAPA.</strong>
+    És una eina no oficial feta a partir de les dades públiques de calendari publicades a
+    <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>.
+    Les dades són una fotografia puntual (no s'actualitzen en directe) i poden contenir errors o quedar desactualitzades;
+    consulta sempre la web oficial de la Federació Catalana de Patinatge per a informació definitiva.
+  </div>
+</div>
+
+<div class="filters-wrap">
+  <div class="filters">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cerca equip, competició o pista…" autocomplete="off">
+    </div>
+    <select id="clubSelect"><option value="0">Tots els clubs</option></select>
+    <select id="compSelect"><option value="-1">Totes les competicions</option></select>
+    <select id="periodSelect">
+      <option value="all">Tota la temporada</option>
+      <option value="today">Avui</option>
+      <option value="7">Propers 7 dies</option>
+      <option value="15">Propers 15 dies</option>
+      <option value="30">Propers 30 dies</option>
+      <option value="past">Jornades passades</option>
+    </select>
+    <div class="segmented" id="statusSeg">
+      <button data-status="all" class="active">Tots</button>
+      <button data-status="played">Jugats</button>
+      <button data-status="upcoming">Per jugar</button>
+    </div>
+    <button class="reset-link" id="resetBtn">Neteja filtres</button>
+  </div>
+  <div class="meta-row" id="metaRow"></div>
+</div>
+
+<main id="resultsRoot">
+</main>
+
+<footer>
+  Dades extretes de l'agenda pública de la Federació Catalana de Patinatge (FECAPA) el 01/09/2026 · Eina no oficial, sense cap vincle amb la FECAPA · Font original: <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var updatedBadge = document.getElementById('updatedBadge');
+  var resultsRootEarly = document.getElementById('resultsRoot');
+
+  fetch('data.json', {cache: 'no-store'})
+    .then(function(resp){
+      if(!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(DATA){
+      updatedBadge.textContent = 'Dades actualitzades: ' + (DATA.generated || 'desconegut');
+      boot(DATA);
+    })
+    .catch(function(err){
+      updatedBadge.textContent = 'No s\u2019han pogut carregar les dades';
+      resultsRootEarly.innerHTML =
+        '<div class="empty-state"><div class="big">\u26A0\uFE0F</div>' +
+        'No s\u2019ha pogut carregar <code>data.json</code>.<br>' +
+        'Si has obert aquest fitxer fent doble clic des del disc, el navegador sol bloquejar aquesta lectura per seguretat.<br>' +
+        'Puja aquesta carpeta a un allotjament est\u00e0tic (GitHub Pages, Netlify\u2026) o obre-la amb un servidor local, i tornar\u00e0 a funcionar.' +
+        '</div>';
+      console.error(err);
+    });
+
+  function boot(DATA){
+  var COMPS = DATA.comps;
+  var VENUES = DATA.venues;
+  var CLUBS = DATA.clubs; // [id, name]
+  var RAW = DATA.matches; // [compIdx, date, time, home, away, score, venueIdx, club1, club2]
+
+  var MONTHS = ["gen","feb","mar","abr","mai","jun","jul","ago","set","oct","nov","des"];
+  var DOW = ["Diumenge","Dilluns","Dimarts","Dimecres","Dijous","Divendres","Dissabte"];
+
+  function parseDate(d){
+    // d = dd/mm/yyyy
+    var p = d.split('/');
+    return new Date(parseInt(p[2],10), parseInt(p[1],10)-1, parseInt(p[0],10));
+  }
+
+  function stripAccents(s){
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  }
+
+  var MATCHES = RAW.map(function(r){
+    var dateObj = parseDate(r[1]);
+    return {
+      compIdx: r[0],
+      dateStr: r[1],
+      dateObj: dateObj,
+      time: r[2],
+      home: r[3],
+      away: r[4],
+      score: r[5],
+      venueIdx: r[6],
+      club1: r[7],
+      club2: r[8],
+      searchBlob: stripAccents(COMPS[r[0]] + ' ' + r[3] + ' ' + r[4] + ' ' + VENUES[r[6]])
+    };
+  });
+
+  // ---- Populate club select ----
+  var clubSelect = document.getElementById('clubSelect');
+  CLUBS.forEach(function(c){
+    var opt = document.createElement('option');
+    opt.value = c[0];
+    opt.textContent = c[1];
+    clubSelect.appendChild(opt);
+  });
+
+  // ---- Populate competition select ----
+  var compSelect = document.getElementById('compSelect');
+  COMPS.forEach(function(name, idx){
+    var opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = name;
+    compSelect.appendChild(opt);
+  });
+
+  var state = {
+    q: '',
+    club: 0,
+    comp: -1,
+    period: 'all',
+    status: 'all',
+    visibleCount: 60
+  };
+
+  var PAGE_SIZE = 60;
+
+  var searchInput = document.getElementById('searchInput');
+  var periodSelect = document.getElementById('periodSelect');
+  var statusSeg = document.getElementById('statusSeg');
+  var resetBtn = document.getElementById('resetBtn');
+  var resultsRoot = document.getElementById('resultsRoot');
+  var metaRow = document.getElementById('metaRow');
+
+  var debounceTimer = null;
+  searchInput.addEventListener('input', function(){
+    clearTimeout(debounceTimer);
+    var v = searchInput.value;
+    debounceTimer = setTimeout(function(){
+      state.q = stripAccents(v.trim());
+      state.visibleCount = PAGE_SIZE;
+      render();
+    }, 150);
+  });
+
+  clubSelect.addEventListener('change', function(){
+    state.club = parseInt(clubSelect.value,10);
+    state.visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  compSelect.addEventListener('change', function(){
+    state.comp = parseInt(compSelect.value,10);
+    state.visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  periodSelect.addEventListener('change', function(){
+    state.period = periodSelect.value;
+    state.visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  statusSeg.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    Array.prototype.forEach.call(statusSeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    state.status = btn.getAttribute('data-status');
+    state.visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  resetBtn.addEventListener('click', function(){
+    state = {q:'', club:0, comp:-1, period:'all', status:'all', visibleCount:PAGE_SIZE};
+    searchInput.value = '';
+    clubSelect.value = '0';
+    compSelect.value = '-1';
+    periodSelect.value = 'all';
+    Array.prototype.forEach.call(statusSeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    statusSeg.querySelector('[data-status="all"]').classList.add('active');
+    render();
+  });
+
+  function todayMidnight(){
+    var t = new Date();
+    t.setHours(0,0,0,0);
+    return t;
+  }
+
+  function filterMatches(){
+    var today = todayMidnight();
+    var q = state.q;
+    var club = state.club;
+    var comp = state.comp;
+    var period = state.period;
+    var status = state.status;
+
+    var periodEnd = null;
+    if(period !== 'all' && period !== 'past' && period !== 'today'){
+      periodEnd = new Date(today);
+      periodEnd.setDate(periodEnd.getDate() + parseInt(period,10));
+    }
+
+    return MATCHES.filter(function(m){
+      if(q && m.searchBlob.indexOf(q) === -1) return false;
+      if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
+      if(comp !== -1 && m.compIdx !== comp) return false;
+
+      if(period === 'today'){
+        if(m.dateObj.getTime() !== today.getTime()) return false;
+      } else if(period === 'past'){
+        if(m.dateObj.getTime() >= today.getTime()) return false;
+      } else if(periodEnd){
+        if(m.dateObj.getTime() < today.getTime() || m.dateObj.getTime() > periodEnd.getTime()) return false;
+      }
+
+      if(status === 'played' && !m.score) return false;
+      if(status === 'upcoming' && m.score) return false;
+
+      return true;
+    });
+  }
+
+  function formatDayHeading(dateObj){
+    return DOW[dateObj.getDay()] + ', ' + dateObj.getDate() + ' ' + MONTHS[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function render(){
+    var filtered = filterMatches();
+    metaRow.textContent = filtered.length + (filtered.length === 1 ? ' partit trobat' : ' partits trobats') + ' de ' + MATCHES.length + ' totals';
+
+    resultsRoot.innerHTML = '';
+
+    if(filtered.length === 0){
+      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.</div>';
+      return;
+    }
+
+    var toShow = filtered.slice(0, state.visibleCount);
+
+    var frag = document.createDocumentFragment();
+    var currentDay = null;
+    var dayWrap = null;
+    var dayCountEl = null;
+    var dayCount = 0;
+
+    toShow.forEach(function(m){
+      var dayKey = m.dateStr;
+      if(dayKey !== currentDay){
+        if(dayWrap) dayCountEl.textContent = dayCount + (dayCount === 1 ? ' partit' : ' partits');
+        currentDay = dayKey;
+        dayCount = 0;
+        dayWrap = document.createElement('div');
+        dayWrap.className = 'day-group';
+        var heading = document.createElement('div');
+        heading.className = 'day-heading';
+        var span1 = document.createElement('span');
+        span1.textContent = formatDayHeading(m.dateObj);
+        dayCountEl = document.createElement('span');
+        dayCountEl.className = 'count';
+        heading.appendChild(span1);
+        heading.appendChild(dayCountEl);
+        dayWrap.appendChild(heading);
+        frag.appendChild(dayWrap);
+      }
+      dayCount++;
+
+      var card = document.createElement('div');
+      card.className = 'match-card';
+
+      var timeEl = document.createElement('div');
+      timeEl.className = 'm-time';
+      timeEl.textContent = m.time || '—';
+
+      var compEl = document.createElement('div');
+      compEl.className = 'm-comp';
+      compEl.textContent = COMPS[m.compIdx];
+
+      var teamsEl = document.createElement('div');
+      teamsEl.className = 'm-teams';
+      teamsEl.innerHTML = '<span>' + escapeHtml(m.home) + '</span><span class="vs">vs</span><span>' + escapeHtml(m.away) + '</span>';
+
+      var venueEl = document.createElement('div');
+      venueEl.className = 'm-venue';
+      venueEl.textContent = VENUES[m.venueIdx];
+
+      var scoreEl = document.createElement('div');
+      if(m.score){
+        scoreEl.className = 'm-score played';
+        scoreEl.textContent = m.score;
+      } else {
+        scoreEl.className = 'm-score upcoming';
+        scoreEl.textContent = 'Per jugar';
+      }
+
+      card.appendChild(timeEl);
+      card.appendChild(compEl);
+      card.appendChild(teamsEl);
+      card.appendChild(venueEl);
+      card.appendChild(scoreEl);
+
+      dayWrap.appendChild(card);
+    });
+    if(dayWrap) dayCountEl.textContent = dayCount + (dayCount === 1 ? ' partit' : ' partits');
+
+    resultsRoot.appendChild(frag);
+
+    if(filtered.length > state.visibleCount){
+      var loadWrap = document.createElement('div');
+      loadWrap.className = 'load-more-wrap';
+      var btn = document.createElement('button');
+      btn.className = 'load-more';
+      btn.textContent = 'Carrega ' + Math.min(PAGE_SIZE, filtered.length - state.visibleCount) + ' partits més';
+      btn.addEventListener('click', function(){
+        state.visibleCount += PAGE_SIZE;
+        render();
+      });
+      loadWrap.appendChild(btn);
+      resultsRoot.appendChild(loadWrap);
+    }
+  }
+
+  render();
+  } // fi de boot()
+})();
+</script>
+</body>
+</html>
