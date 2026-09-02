@@ -162,6 +162,105 @@
     color:var(--text);
     max-width:190px;
   }
+  .fav-field{
+    display:flex;
+    align-items:stretch;
+    gap:4px;
+  }
+  .fav-field select{max-width:170px;}
+  .fav-btn{
+    background:var(--ice);
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    color:var(--wood-2);
+    font-size:17px;
+    width:40px;
+    cursor:pointer;
+    line-height:1;
+  }
+  .fav-btn:hover{background:#FDF1E7; border-color:var(--wood);}
+  .fav-btn.active{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:#fff;
+  }
+  .fav-btn:disabled{opacity:0.4; cursor:not-allowed;}
+  .fav-badges{
+    max-width:980px;
+    margin:10px auto 0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .fav-chip{
+    padding:9px 14px;
+    background:#FFF6EC;
+    border:1px solid #F0D9B8;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:var(--amber-ink);
+  }
+  .fav-chip.comp-chip{background:#EEF4FB; border-color:#CBDCEF; color:var(--ink-2);}
+  .fav-chip-text strong{color:var(--wood-2);}
+  .comp-chip .fav-chip-text strong{color:var(--ink);}
+  .fav-chip-link{
+    background:none;
+    border:none;
+    color:var(--ink-2);
+    font-weight:600;
+    font-size:13px;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:0;
+  }
+  .fav-chip-clear{
+    background:none;
+    border:none;
+    color:var(--amber-ink);
+    font-size:14px;
+    cursor:pointer;
+    margin-left:auto;
+    padding:2px 4px;
+  }
+  .comp-chip .fav-chip-clear{color:var(--ink-2);}
+
+  .fav-only-wrap{
+    max-width:980px;
+    margin:12px auto 0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .segmented-fav button.active{
+    background:var(--wood);
+  }
+  .fav-only-hint{
+    font-size:12px;
+    color:var(--text-soft);
+  }
+  .fav-empty-hint{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-soft);
+  }
+  .fav-empty-hint .big{font-size:34px; margin-bottom:8px;}
+  .fav-empty-hint button{
+    margin-top:14px;
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-family:'Inter';
+    font-weight:600;
+    font-size:13.5px;
+    cursor:pointer;
+  }
   .segmented{
     display:flex;
     border:1.5px solid var(--line);
@@ -204,7 +303,7 @@
   }
 
   /* ---------- Results ---------- */
-  main{
+  .content-wrap{
     max-width:980px;
     margin:0 auto;
     padding:6px 18px 60px;
@@ -243,6 +342,12 @@
     gap:4px 12px;
     align-items:center;
   }
+  .match-card.fav-match{
+    border-color:var(--amber);
+    border-left:4px solid var(--amber);
+    background:#FFFBF6;
+  }
+  .fav-star{color:var(--amber); font-size:12px; margin-right:2px;}
   .m-time{
     font-family:'Oswald';
     font-weight:600;
@@ -324,6 +429,127 @@
   }
   .load-more:hover{background:var(--ink-2);}
 
+  /* ---------- View toggle ---------- */
+  .view-toggle-wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:12px 18px 0;
+  }
+
+  /* ---------- Calendar view ---------- */
+  .calendar-wrap{padding-top:8px;}
+  .cal-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-bottom:10px;
+  }
+  .cal-title{
+    font-family:'Oswald';
+    font-size:20px;
+    font-weight:600;
+    text-transform:capitalize;
+    color:var(--ink);
+    min-width:180px;
+    text-align:center;
+  }
+  .cal-nav-btn{
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    color:var(--ink);
+    width:34px;height:34px;
+    border-radius:8px;
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .cal-nav-btn:hover{background:var(--ice);}
+  .cal-today-btn{
+    display:block;
+    margin:0 auto 14px;
+    background:none;
+    border:1.5px solid var(--wood);
+    color:var(--wood-2);
+    font-family:'Inter';
+    font-weight:600;
+    font-size:12.5px;
+    padding:5px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .cal-today-btn:hover{background:#FDF1E7;}
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+  }
+  .cal-dow-row{margin-bottom:4px;}
+  .cal-dow{
+    text-align:center;
+    font-family:'Inter';
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--text-soft);
+    padding-bottom:4px;
+  }
+  .cal-cell{
+    position:relative;
+    aspect-ratio:1 / 0.85;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:6px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .cal-cell.empty{background:transparent; border-color:transparent;}
+  .cal-daynum{
+    font-family:'Oswald';
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-soft);
+  }
+  .cal-cell.today .cal-daynum{color:var(--wood-2);}
+  .cal-cell.today{border-color:var(--wood);}
+  .cal-cell.has-matches{cursor:pointer;}
+  .cal-cell.has-matches:hover{border-color:var(--ink-2); background:var(--ice);}
+  .cal-cell.has-matches .cal-daynum{color:var(--ink);}
+  .cal-badge{
+    margin-top:auto;
+    align-self:flex-end;
+    background:var(--amber);
+    color:#fff;
+    font-family:'Oswald';
+    font-size:12px;
+    font-weight:700;
+    min-width:20px;
+    text-align:center;
+    border-radius:10px;
+    padding:1px 6px;
+  }
+  .cal-cell.selected{
+    background:var(--ink);
+    border-color:var(--ink);
+  }
+  .cal-cell.selected .cal-daynum{color:#fff;}
+  .cal-cell.selected .cal-badge{background:#fff; color:var(--ink);}
+  .cal-day-panel{margin-top:22px;}
+  .cal-hint{
+    text-align:center;
+    color:var(--text-soft);
+    font-size:13.5px;
+    padding:30px 10px;
+  }
+  @media (max-width:520px){
+    .cal-cell{padding:4px;}
+    .cal-badge{font-size:10.5px; padding:0 5px;}
+    .cal-title{font-size:17px; min-width:auto;}
+  }
+
   footer{
     max-width:980px;
     margin:0 auto;
@@ -362,8 +588,19 @@
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Cerca equip, competició o pista…" autocomplete="off">
     </div>
-    <select id="clubSelect"><option value="0">Tots els clubs</option></select>
-    <select id="compSelect"><option value="-1">Totes les competicions</option></select>
+    <div class="fav-field">
+      <select id="clubSelect"><option value="0">Tots els clubs</option></select>
+      <button class="fav-btn" id="favBtn" type="button" title="Desa com a equip preferit" aria-label="Desa com a equip preferit">☆</button>
+    </div>
+    <div class="segmented" id="homeAwaySeg" style="display:none">
+      <button data-homeaway="all" class="active">Tots</button>
+      <button data-homeaway="home">🏠 Local</button>
+      <button data-homeaway="away">🚌 Visitant</button>
+    </div>
+    <div class="fav-field">
+      <select id="compSelect"><option value="-1">Totes les competicions</option></select>
+      <button class="fav-btn" id="favCompBtn" type="button" title="Desa com a competició preferida" aria-label="Desa com a competició preferida">☆</button>
+    </div>
     <select id="periodSelect">
       <option value="all">Tota la temporada</option>
       <option value="today">Avui</option>
@@ -379,11 +616,39 @@
     </div>
     <button class="reset-link" id="resetBtn">Neteja filtres</button>
   </div>
+  <div class="fav-only-wrap" id="favOnlyWrap">
+    <div class="segmented segmented-fav" id="favOnlySeg">
+      <button data-favonly="0" class="active">Tots els partits</button>
+      <button data-favonly="1">⭐ Només favorits</button>
+    </div>
+    <span class="fav-only-hint">Recorda la teva selecció: la propera vegada que obris la pàgina es mantindrà activada.</span>
+  </div>
+  <div class="fav-badges" id="favBadges">
+    <div class="fav-chip" id="favClubChip" style="display:none">
+      <span class="fav-chip-text">⭐ El teu equip: <strong id="favBadgeName"></strong></span>
+      <button class="fav-chip-link" id="favFilterBtn">Veure només els seus partits</button>
+      <button class="fav-chip-clear" id="favClearBtn" title="Deixa de ser el teu equip preferit" aria-label="Treu equip preferit">✕</button>
+    </div>
+    <div class="fav-chip comp-chip" id="favCompChip" style="display:none">
+      <span class="fav-chip-text">🏆 Competició preferida: <strong id="favBadgeCompName"></strong></span>
+      <button class="fav-chip-link" id="favFilterCompBtn">Veure només els seus partits</button>
+      <button class="fav-chip-clear" id="favClearCompBtn" title="Deixa de ser la competició preferida" aria-label="Treu competició preferida">✕</button>
+    </div>
+  </div>
   <div class="meta-row" id="metaRow"></div>
 </div>
 
-<main id="resultsRoot">
-</main>
+<div class="view-toggle-wrap">
+  <div class="segmented" id="viewSeg">
+    <button data-view="list" class="active">📋 Llista</button>
+    <button data-view="calendar">🗓️ Calendari</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <main id="resultsRoot"></main>
+  <div id="calendarRoot" class="calendar-wrap" style="display:none"></div>
+</div>
 
 <footer>
   Dades extretes de l'agenda pública de la Federació Catalana de Patinatge (FECAPA) el 01/09/2026 · Eina no oficial, sense cap vincle amb la FECAPA · Font original: <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>
@@ -423,7 +688,9 @@
   var RAW = DATA.matches; // [compIdx, date, time, home, away, score, venueIdx, club1, club2]
 
   var MONTHS = ["gen","feb","mar","abr","mai","jun","jul","ago","set","oct","nov","des"];
+  var MONTHS_LONG = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
   var DOW = ["Diumenge","Dilluns","Dimarts","Dimecres","Dijous","Divendres","Dissabte"];
+  var DOW_SHORT_MON_FIRST = ["Dl","Dt","Dc","Dj","Dv","Ds","Dg"];
 
   function parseDate(d){
     // d = dd/mm/yyyy
@@ -433,6 +700,81 @@
 
   function stripAccents(s){
     return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  }
+
+  function startOfMonth(d){
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  }
+
+  function sameDate(a,b){
+    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+  }
+
+  function pad2(n){
+    return n < 10 ? '0'+n : ''+n;
+  }
+
+  var FAV_KEY = 'agenda-hoquei-fecapa-equip-preferit';
+  var FAV_COMP_KEY = 'agenda-hoquei-fecapa-competicio-preferida';
+
+  function loadFavorite(){
+    try{
+      var v = window.localStorage.getItem(FAV_KEY);
+      return v ? parseInt(v, 10) : null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function saveFavorite(clubId){
+    try{
+      window.localStorage.setItem(FAV_KEY, String(clubId));
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function removeFavorite(){
+    try{
+      window.localStorage.removeItem(FAV_KEY);
+    }catch(e){ /* ignore */ }
+  }
+
+  function loadFavoriteCompName(){
+    try{
+      return window.localStorage.getItem(FAV_COMP_KEY) || null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function saveFavoriteCompName(name){
+    try{
+      window.localStorage.setItem(FAV_COMP_KEY, name);
+    }catch(e){ /* ignore */ }
+  }
+
+  function removeFavoriteCompName(){
+    try{
+      window.localStorage.removeItem(FAV_COMP_KEY);
+    }catch(e){ /* ignore */ }
+  }
+
+  var FAV_ONLY_KEY = 'agenda-hoquei-fecapa-nomes-favorits';
+
+  function loadFavOnly(){
+    try{
+      return window.localStorage.getItem(FAV_ONLY_KEY) === '1';
+    }catch(e){
+      return false;
+    }
+  }
+
+  function saveFavOnly(val){
+    try{
+      window.localStorage.setItem(FAV_ONLY_KEY, val ? '1' : '0');
+    }catch(e){ /* ignore */ }
   }
 
   var MATCHES = RAW.map(function(r){
@@ -476,7 +818,14 @@
     comp: -1,
     period: 'all',
     status: 'all',
-    visibleCount: 60
+    homeAway: 'all',
+    visibleCount: 60,
+    view: 'list',
+    calMonth: startOfMonth(new Date()),
+    calSelectedDate: null,
+    favClub: loadFavorite(),
+    favCompName: loadFavoriteCompName(),
+    favOnly: loadFavOnly()
   };
 
   var PAGE_SIZE = 60;
@@ -484,9 +833,200 @@
   var searchInput = document.getElementById('searchInput');
   var periodSelect = document.getElementById('periodSelect');
   var statusSeg = document.getElementById('statusSeg');
+  var viewSeg = document.getElementById('viewSeg');
   var resetBtn = document.getElementById('resetBtn');
   var resultsRoot = document.getElementById('resultsRoot');
+  var calendarRoot = document.getElementById('calendarRoot');
   var metaRow = document.getElementById('metaRow');
+  var favBtn = document.getElementById('favBtn');
+  var favBadges = document.getElementById('favBadges');
+  var favClubChip = document.getElementById('favClubChip');
+  var favBadgeName = document.getElementById('favBadgeName');
+  var favFilterBtn = document.getElementById('favFilterBtn');
+  var favClearBtn = document.getElementById('favClearBtn');
+  var favCompBtn = document.getElementById('favCompBtn');
+  var favCompChip = document.getElementById('favCompChip');
+  var favBadgeCompName = document.getElementById('favBadgeCompName');
+  var favFilterCompBtn = document.getElementById('favFilterCompBtn');
+  var favClearCompBtn = document.getElementById('favClearCompBtn');
+  var favOnlySeg = document.getElementById('favOnlySeg');
+  var homeAwaySeg = document.getElementById('homeAwaySeg');
+
+  function setFavOnlyUI(active){
+    Array.prototype.forEach.call(favOnlySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    favOnlySeg.querySelector('[data-favonly="' + (active ? '1' : '0') + '"]').classList.add('active');
+  }
+
+  function activateFavOnly(){
+    state.favOnly = true;
+    saveFavOnly(true);
+    setFavOnlyUI(true);
+    state.visibleCount = PAGE_SIZE;
+    updateHomeAwayVisibility();
+    render();
+  }
+
+  function deactivateFavOnly(){
+    state.favOnly = false;
+    saveFavOnly(false);
+    setFavOnlyUI(false);
+    state.visibleCount = PAGE_SIZE;
+    updateHomeAwayVisibility();
+    render();
+  }
+
+  favOnlySeg.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    if(btn.getAttribute('data-favonly') === '1'){
+      activateFavOnly();
+    } else {
+      deactivateFavOnly();
+    }
+  });
+
+  function favCompIndex(){
+    if(!state.favCompName) return -1;
+    return COMPS.indexOf(state.favCompName);
+  }
+
+  function resetHomeAwayButtonsUI(){
+    Array.prototype.forEach.call(homeAwaySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    homeAwaySeg.querySelector('[data-homeaway="all"]').classList.add('active');
+  }
+
+  function updateHomeAwayVisibility(){
+    homeAwaySeg.style.display = (state.club !== 0 && !state.favOnly) ? 'flex' : 'none';
+    if(state.club === 0 && state.homeAway !== 'all'){
+      state.homeAway = 'all';
+      resetHomeAwayButtonsUI();
+    }
+  }
+
+  homeAwaySeg.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn || state.club === 0) return;
+    Array.prototype.forEach.call(homeAwaySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    state.homeAway = btn.getAttribute('data-homeaway');
+    state.visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  function clubNameById(id){
+    for(var i=0;i<CLUBS.length;i++){
+      if(CLUBS[i][0] === id) return CLUBS[i][1];
+    }
+    return null;
+  }
+
+  function updateFavUI(){
+    var favCompIdx = favCompIndex();
+
+    if(state.favClub){
+      var name = clubNameById(state.favClub);
+      favClubChip.style.display = 'flex';
+      favBadgeName.textContent = name || ('Club #' + state.favClub);
+    } else {
+      favClubChip.style.display = 'none';
+    }
+
+    if(state.favCompName){
+      favCompChip.style.display = 'flex';
+      favBadgeCompName.textContent = favCompIdx !== -1
+        ? state.favCompName
+        : state.favCompName + ' (no disponible ara mateix)';
+    } else {
+      favCompChip.style.display = 'none';
+    }
+
+    favBadges.style.display = (state.favClub || state.favCompName) ? 'flex' : 'none';
+
+    if(state.club === 0){
+      favBtn.disabled = true;
+      favBtn.textContent = '☆';
+      favBtn.classList.remove('active');
+    } else {
+      favBtn.disabled = false;
+      if(state.club === state.favClub){
+        favBtn.textContent = '★';
+        favBtn.classList.add('active');
+        favBtn.title = 'Treu com a equip preferit';
+      } else {
+        favBtn.textContent = '☆';
+        favBtn.classList.remove('active');
+        favBtn.title = 'Desa com a equip preferit';
+      }
+    }
+
+    if(state.comp === -1){
+      favCompBtn.disabled = true;
+      favCompBtn.textContent = '☆';
+      favCompBtn.classList.remove('active');
+    } else {
+      favCompBtn.disabled = false;
+      if(COMPS[state.comp] === state.favCompName){
+        favCompBtn.textContent = '★';
+        favCompBtn.classList.add('active');
+        favCompBtn.title = 'Treu com a competició preferida';
+      } else {
+        favCompBtn.textContent = '☆';
+        favCompBtn.classList.remove('active');
+        favCompBtn.title = 'Desa com a competició preferida';
+      }
+    }
+  }
+
+  favBtn.addEventListener('click', function(){
+    if(state.club === 0) return;
+    if(state.club === state.favClub){
+      removeFavorite();
+      state.favClub = null;
+    } else {
+      saveFavorite(state.club);
+      state.favClub = state.club;
+    }
+    updateFavUI();
+    render();
+  });
+
+  favFilterBtn.addEventListener('click', function(){
+    if(!state.favClub) return;
+    activateFavOnly();
+  });
+
+  favClearBtn.addEventListener('click', function(){
+    removeFavorite();
+    state.favClub = null;
+    updateFavUI();
+    render();
+  });
+
+  favCompBtn.addEventListener('click', function(){
+    if(state.comp === -1) return;
+    var currentName = COMPS[state.comp];
+    if(currentName === state.favCompName){
+      removeFavoriteCompName();
+      state.favCompName = null;
+    } else {
+      saveFavoriteCompName(currentName);
+      state.favCompName = currentName;
+    }
+    updateFavUI();
+    render();
+  });
+
+  favFilterCompBtn.addEventListener('click', function(){
+    if(!state.favCompName) return;
+    activateFavOnly();
+  });
+
+  favClearCompBtn.addEventListener('click', function(){
+    removeFavoriteCompName();
+    state.favCompName = null;
+    updateFavUI();
+    render();
+  });
 
   var debounceTimer = null;
   searchInput.addEventListener('input', function(){
@@ -502,12 +1042,15 @@
   clubSelect.addEventListener('change', function(){
     state.club = parseInt(clubSelect.value,10);
     state.visibleCount = PAGE_SIZE;
+    updateFavUI();
+    updateHomeAwayVisibility();
     render();
   });
 
   compSelect.addEventListener('change', function(){
     state.comp = parseInt(compSelect.value,10);
     state.visibleCount = PAGE_SIZE;
+    updateFavUI();
     render();
   });
 
@@ -527,14 +1070,33 @@
     render();
   });
 
+  viewSeg.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    Array.prototype.forEach.call(viewSeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    state.view = btn.getAttribute('data-view');
+    periodSelect.style.display = (state.view === 'calendar') ? 'none' : '';
+    render();
+  });
+
   resetBtn.addEventListener('click', function(){
-    state = {q:'', club:0, comp:-1, period:'all', status:'all', visibleCount:PAGE_SIZE};
+    var keepView = state.view;
+    var keepMonth = state.calMonth;
+    var keepFav = state.favClub;
+    var keepFavComp = state.favCompName;
+    state = {q:'', club:0, comp:-1, period:'all', status:'all', homeAway:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp, favOnly:false};
+    saveFavOnly(false);
     searchInput.value = '';
     clubSelect.value = '0';
     compSelect.value = '-1';
     periodSelect.value = 'all';
     Array.prototype.forEach.call(statusSeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
     statusSeg.querySelector('[data-status="all"]').classList.add('active');
+    resetHomeAwayButtonsUI();
+    setFavOnlyUI(false);
+    updateFavUI();
+    updateHomeAwayVisibility();
     render();
   });
 
@@ -544,12 +1106,13 @@
     return t;
   }
 
-  function filterMatches(){
+  function filterMatches(opts){
+    opts = opts || {};
     var today = todayMidnight();
     var q = state.q;
     var club = state.club;
     var comp = state.comp;
-    var period = state.period;
+    var period = opts.ignorePeriod ? 'all' : state.period;
     var status = state.status;
 
     var periodEnd = null;
@@ -560,8 +1123,23 @@
 
     return MATCHES.filter(function(m){
       if(q && m.searchBlob.indexOf(q) === -1) return false;
-      if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
-      if(comp !== -1 && m.compIdx !== comp) return false;
+
+      if(state.favOnly){
+        var favClubMatch = state.favClub && (m.club1 === state.favClub || m.club2 === state.favClub);
+        var favCompMatch = state.favCompName && COMPS[m.compIdx] === state.favCompName;
+        if(!favClubMatch && !favCompMatch) return false;
+      } else {
+        if(club !== 0){
+          if(state.homeAway === 'home'){
+            if(m.club1 !== club) return false;
+          } else if(state.homeAway === 'away'){
+            if(m.club2 !== club) return false;
+          } else {
+            if(m.club1 !== club && m.club2 !== club) return false;
+          }
+        }
+        if(comp !== -1 && m.compIdx !== comp) return false;
+      }
 
       if(period === 'today'){
         if(m.dateObj.getTime() !== today.getTime()) return false;
@@ -588,14 +1166,90 @@
     });
   }
 
+  function buildMatchCard(m){
+    var card = document.createElement('div');
+    card.className = 'match-card';
+    var isFavClubMatch = state.favClub && (m.club1 === state.favClub || m.club2 === state.favClub);
+    var isFavCompMatch = state.favCompName && COMPS[m.compIdx] === state.favCompName;
+    if(isFavClubMatch || isFavCompMatch){
+      card.className += ' fav-match';
+    }
+
+    var timeEl = document.createElement('div');
+    timeEl.className = 'm-time';
+    timeEl.textContent = m.time || '—';
+
+    var compEl = document.createElement('div');
+    compEl.className = 'm-comp';
+    compEl.innerHTML = (isFavCompMatch ? '🏆 ' : '') + escapeHtml(COMPS[m.compIdx]);
+
+    var homeStar = (state.favClub && m.club1 === state.favClub) ? '<span class="fav-star">★</span>' : '';
+    var awayStar = (state.favClub && m.club2 === state.favClub) ? '<span class="fav-star">★</span>' : '';
+
+    var teamsEl = document.createElement('div');
+    teamsEl.className = 'm-teams';
+    teamsEl.innerHTML = '<span>' + homeStar + escapeHtml(m.home) + '</span><span class="vs">vs</span><span>' + awayStar + escapeHtml(m.away) + '</span>';
+
+    var venueEl = document.createElement('div');
+    venueEl.className = 'm-venue';
+    venueEl.textContent = VENUES[m.venueIdx];
+
+    var scoreEl = document.createElement('div');
+    if(m.score){
+      scoreEl.className = 'm-score played';
+      scoreEl.textContent = m.score;
+    } else {
+      scoreEl.className = 'm-score upcoming';
+      scoreEl.textContent = 'Per jugar';
+    }
+
+    card.appendChild(timeEl);
+    card.appendChild(compEl);
+    card.appendChild(teamsEl);
+    card.appendChild(venueEl);
+    card.appendChild(scoreEl);
+    return card;
+  }
+
   function render(){
+    if(state.favOnly && !state.favClub && !state.favCompName){
+      calendarRoot.style.display = 'none';
+      resultsRoot.style.display = '';
+      metaRow.textContent = 'Cap favorit desat encara';
+      resultsRoot.innerHTML = '';
+      var hint = document.createElement('div');
+      hint.className = 'fav-empty-hint';
+      hint.innerHTML = '<div class="big">⭐</div>Encara no tens cap equip ni competició preferits.<br>Marca\u2019n un amb l\u2019estrella ☆ del filtre de club o de competició.';
+      var backBtn = document.createElement('button');
+      backBtn.textContent = 'Veure tots els partits';
+      backBtn.addEventListener('click', deactivateFavOnly);
+      hint.appendChild(backBtn);
+      resultsRoot.appendChild(hint);
+      return;
+    }
+
+    if(state.view === 'calendar'){
+      resultsRoot.style.display = 'none';
+      calendarRoot.style.display = '';
+      var allFiltered = filterMatches({ignorePeriod:true});
+      metaRow.textContent = allFiltered.length + (allFiltered.length === 1 ? ' partit trobat' : ' partits trobats') + ' de ' + MATCHES.length + ' totals';
+      renderCalendar(allFiltered);
+      return;
+    }
+
+    calendarRoot.style.display = 'none';
+    resultsRoot.style.display = '';
+
     var filtered = filterMatches();
     metaRow.textContent = filtered.length + (filtered.length === 1 ? ' partit trobat' : ' partits trobats') + ' de ' + MATCHES.length + ' totals';
 
     resultsRoot.innerHTML = '';
 
     if(filtered.length === 0){
-      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.</div>';
+      var emptyMsg = state.favOnly
+        ? 'Cap partit dels teus favorits coincideix amb la resta de filtres.<br>Prova de netejar la cerca, el període o l\u2019estat.'
+        : 'Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.';
+      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>' + emptyMsg + '</div>';
       return;
     }
 
@@ -627,42 +1281,7 @@
         frag.appendChild(dayWrap);
       }
       dayCount++;
-
-      var card = document.createElement('div');
-      card.className = 'match-card';
-
-      var timeEl = document.createElement('div');
-      timeEl.className = 'm-time';
-      timeEl.textContent = m.time || '—';
-
-      var compEl = document.createElement('div');
-      compEl.className = 'm-comp';
-      compEl.textContent = COMPS[m.compIdx];
-
-      var teamsEl = document.createElement('div');
-      teamsEl.className = 'm-teams';
-      teamsEl.innerHTML = '<span>' + escapeHtml(m.home) + '</span><span class="vs">vs</span><span>' + escapeHtml(m.away) + '</span>';
-
-      var venueEl = document.createElement('div');
-      venueEl.className = 'm-venue';
-      venueEl.textContent = VENUES[m.venueIdx];
-
-      var scoreEl = document.createElement('div');
-      if(m.score){
-        scoreEl.className = 'm-score played';
-        scoreEl.textContent = m.score;
-      } else {
-        scoreEl.className = 'm-score upcoming';
-        scoreEl.textContent = 'Per jugar';
-      }
-
-      card.appendChild(timeEl);
-      card.appendChild(compEl);
-      card.appendChild(teamsEl);
-      card.appendChild(venueEl);
-      card.appendChild(scoreEl);
-
-      dayWrap.appendChild(card);
+      dayWrap.appendChild(buildMatchCard(m));
     });
     if(dayWrap) dayCountEl.textContent = dayCount + (dayCount === 1 ? ' partit' : ' partits');
 
@@ -683,6 +1302,138 @@
     }
   }
 
+  function renderCalendar(filteredMatches){
+    var byDate = {};
+    filteredMatches.forEach(function(m){
+      (byDate[m.dateStr] = byDate[m.dateStr] || []).push(m);
+    });
+
+    var month = state.calMonth;
+    var monthLabel = MONTHS_LONG[month.getMonth()] + ' ' + month.getFullYear();
+    var firstOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
+    var firstDow = (firstOfMonth.getDay() + 6) % 7; // setmana comença en dilluns
+    var daysInMonth = new Date(month.getFullYear(), month.getMonth()+1, 0).getDate();
+    var today = todayMidnight();
+
+    calendarRoot.innerHTML = '';
+
+    var header = document.createElement('div');
+    header.className = 'cal-header';
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'cal-nav-btn';
+    prevBtn.setAttribute('aria-label','Mes anterior');
+    prevBtn.textContent = '‹';
+    var titleEl = document.createElement('div');
+    titleEl.className = 'cal-title';
+    titleEl.textContent = monthLabel;
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'cal-nav-btn';
+    nextBtn.setAttribute('aria-label','Mes següent');
+    nextBtn.textContent = '›';
+    header.appendChild(prevBtn);
+    header.appendChild(titleEl);
+    header.appendChild(nextBtn);
+    calendarRoot.appendChild(header);
+
+    var todayBtn = document.createElement('button');
+    todayBtn.className = 'cal-today-btn';
+    todayBtn.textContent = 'Avui';
+    calendarRoot.appendChild(todayBtn);
+
+    var dowRow = document.createElement('div');
+    dowRow.className = 'cal-grid cal-dow-row';
+    DOW_SHORT_MON_FIRST.forEach(function(d){
+      var el = document.createElement('div');
+      el.className = 'cal-dow';
+      el.textContent = d;
+      dowRow.appendChild(el);
+    });
+    calendarRoot.appendChild(dowRow);
+
+    var grid = document.createElement('div');
+    grid.className = 'cal-grid';
+
+    for(var i=0;i<firstDow;i++){
+      var emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-cell empty';
+      grid.appendChild(emptyCell);
+    }
+
+    for(var day=1; day<=daysInMonth; day++){
+      var cellDate = new Date(month.getFullYear(), month.getMonth(), day);
+      var dateStr = pad2(day) + '/' + pad2(month.getMonth()+1) + '/' + month.getFullYear();
+      var dayMatches = byDate[dateStr] || [];
+      var cell = document.createElement('div');
+      var cls = 'cal-cell';
+      if(dayMatches.length > 0) cls += ' has-matches';
+      if(sameDate(cellDate, today)) cls += ' today';
+      if(state.calSelectedDate === dateStr) cls += ' selected';
+      cell.className = cls;
+
+      var numEl = document.createElement('span');
+      numEl.className = 'cal-daynum';
+      numEl.textContent = day;
+      cell.appendChild(numEl);
+
+      if(dayMatches.length > 0){
+        var badge = document.createElement('span');
+        badge.className = 'cal-badge';
+        badge.textContent = dayMatches.length;
+        cell.appendChild(badge);
+
+        cell.addEventListener('click', (function(ds){
+          return function(){
+            state.calSelectedDate = (state.calSelectedDate === ds) ? null : ds;
+            render();
+          };
+        })(dateStr));
+      }
+
+      grid.appendChild(cell);
+    }
+    calendarRoot.appendChild(grid);
+
+    prevBtn.addEventListener('click', function(){
+      state.calMonth = new Date(month.getFullYear(), month.getMonth()-1, 1);
+      state.calSelectedDate = null;
+      render();
+    });
+    nextBtn.addEventListener('click', function(){
+      state.calMonth = new Date(month.getFullYear(), month.getMonth()+1, 1);
+      state.calSelectedDate = null;
+      render();
+    });
+    todayBtn.addEventListener('click', function(){
+      state.calMonth = startOfMonth(new Date());
+      state.calSelectedDate = null;
+      render();
+    });
+
+    var panel = document.createElement('div');
+    panel.className = 'cal-day-panel';
+    if(state.calSelectedDate && byDate[state.calSelectedDate]){
+      var dayMatches2 = byDate[state.calSelectedDate];
+      var heading = document.createElement('div');
+      heading.className = 'day-heading';
+      var d2 = parseDate(state.calSelectedDate);
+      var span1 = document.createElement('span');
+      span1.textContent = formatDayHeading(d2);
+      var countEl = document.createElement('span');
+      countEl.className = 'count';
+      countEl.textContent = dayMatches2.length + (dayMatches2.length === 1 ? ' partit' : ' partits');
+      heading.appendChild(span1);
+      heading.appendChild(countEl);
+      panel.appendChild(heading);
+      dayMatches2.forEach(function(m){ panel.appendChild(buildMatchCard(m)); });
+    } else {
+      panel.innerHTML = '<div class="cal-hint">Toca un dia marcat amb un número per veure els partits d\u2019aquell dia.</div>';
+    }
+    calendarRoot.appendChild(panel);
+  }
+
+  setFavOnlyUI(state.favOnly);
+  updateFavUI();
+  updateHomeAwayVisibility();
   render();
   } // fi de boot()
 })();
