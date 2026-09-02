@@ -559,11 +559,6 @@
       <select id="clubSelect"><option value="0">Tots els clubs</option></select>
       <button class="fav-btn" id="favBtn" type="button" title="Desa com a equip preferit" aria-label="Desa com a equip preferit">☆</button>
     </div>
-    <div class="segmented" id="homeAwaySeg" style="display:none">
-      <button data-homeaway="all" class="active">Tots</button>
-      <button data-homeaway="home">🏠 Local</button>
-      <button data-homeaway="away">🚌 Visitant</button>
-    </div>
     <div class="fav-field">
       <select id="compSelect"><option value="-1">Totes les competicions</option></select>
       <button class="fav-btn" id="favCompBtn" type="button" title="Desa com a competició preferida" aria-label="Desa com a competició preferida">☆</button>
@@ -777,7 +772,6 @@
     club: 0,
     comp: -1,
     period: 'all',
-    homeAway: 'all',
     visibleCount: 60,
     view: 'list',
     calMonth: startOfMonth(new Date()),
@@ -806,7 +800,6 @@
   var favBadgeCompName = document.getElementById('favBadgeCompName');
   var favClearCompBtn = document.getElementById('favClearCompBtn');
   var favOnlySeg = document.getElementById('favOnlySeg');
-  var homeAwaySeg = document.getElementById('homeAwaySeg');
 
   function setFavOnlyUI(active){
     Array.prototype.forEach.call(favOnlySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
@@ -818,7 +811,6 @@
     saveFavOnly(true);
     setFavOnlyUI(true);
     state.visibleCount = PAGE_SIZE;
-    updateHomeAwayVisibility();
     render();
   }
 
@@ -827,7 +819,6 @@
     saveFavOnly(false);
     setFavOnlyUI(false);
     state.visibleCount = PAGE_SIZE;
-    updateHomeAwayVisibility();
     render();
   }
 
@@ -845,29 +836,6 @@
     if(!state.favCompName) return -1;
     return COMPS.indexOf(state.favCompName);
   }
-
-  function resetHomeAwayButtonsUI(){
-    Array.prototype.forEach.call(homeAwaySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
-    homeAwaySeg.querySelector('[data-homeaway="all"]').classList.add('active');
-  }
-
-  function updateHomeAwayVisibility(){
-    homeAwaySeg.style.display = (state.club !== 0 && !state.favOnly) ? 'flex' : 'none';
-    if(state.club === 0 && state.homeAway !== 'all'){
-      state.homeAway = 'all';
-      resetHomeAwayButtonsUI();
-    }
-  }
-
-  homeAwaySeg.addEventListener('click', function(e){
-    var btn = e.target.closest('button');
-    if(!btn || state.club === 0) return;
-    Array.prototype.forEach.call(homeAwaySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-    state.homeAway = btn.getAttribute('data-homeaway');
-    state.visibleCount = PAGE_SIZE;
-    render();
-  });
 
   function clubNameById(id){
     for(var i=0;i<CLUBS.length;i++){
@@ -989,7 +957,6 @@
     state.club = parseInt(clubSelect.value,10);
     state.visibleCount = PAGE_SIZE;
     updateFavUI();
-    updateHomeAwayVisibility();
     render();
   });
 
@@ -1021,16 +988,14 @@
     var keepMonth = state.calMonth;
     var keepFav = state.favClub;
     var keepFavComp = state.favCompName;
-    state = {q:'', club:0, comp:-1, period:'all', homeAway:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp, favOnly:false};
+    state = {q:'', club:0, comp:-1, period:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp, favOnly:false};
     saveFavOnly(false);
     searchInput.value = '';
     clubSelect.value = '0';
     compSelect.value = '-1';
     periodSelect.value = 'all';
-    resetHomeAwayButtonsUI();
     setFavOnlyUI(false);
     updateFavUI();
-    updateHomeAwayVisibility();
     render();
   });
 
@@ -1062,15 +1027,7 @@
         var compOk = state.favCompName ? (COMPS[m.compIdx] === state.favCompName) : true;
         if(!clubOk || !compOk) return false;
       } else {
-        if(club !== 0){
-          if(state.homeAway === 'home'){
-            if(m.club1 !== club) return false;
-          } else if(state.homeAway === 'away'){
-            if(m.club2 !== club) return false;
-          } else {
-            if(m.club1 !== club && m.club2 !== club) return false;
-          }
-        }
+        if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
         if(comp !== -1 && m.compIdx !== comp) return false;
       }
 
@@ -1363,7 +1320,6 @@
 
   setFavOnlyUI(state.favOnly);
   updateFavUI();
-  updateHomeAwayVisibility();
   render();
   } // fi de boot()
 })();
