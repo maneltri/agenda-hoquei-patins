@@ -205,39 +205,6 @@
   }
   .comp-chip .fav-chip-clear{color:var(--ink-2);}
 
-  .fav-only-wrap{
-    max-width:980px;
-    margin:12px auto 0;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .segmented-fav button.active{
-    background:var(--wood);
-  }
-  .fav-only-hint{
-    font-size:12px;
-    color:var(--text-soft);
-  }
-  .fav-empty-hint{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--text-soft);
-  }
-  .fav-empty-hint .big{font-size:34px; margin-bottom:8px;}
-  .fav-empty-hint button{
-    margin-top:14px;
-    background:var(--ink);
-    color:#fff;
-    border:none;
-    padding:10px 20px;
-    border-radius:8px;
-    font-family:'Inter';
-    font-weight:600;
-    font-size:13.5px;
-    cursor:pointer;
-  }
   .segmented{
     display:flex;
     border:1.5px solid var(--line);
@@ -573,13 +540,6 @@
     </select>
     <button class="reset-link" id="resetBtn">Neteja filtres</button>
   </div>
-  <div class="fav-only-wrap" id="favOnlyWrap">
-    <div class="segmented segmented-fav" id="favOnlySeg">
-      <button data-favonly="0" class="active">Tots els partits</button>
-      <button data-favonly="1">⭐ Només favorits</button>
-    </div>
-    <span class="fav-only-hint">Recorda la teva selecció: la propera vegada que obris la pàgina es mantindrà activada.</span>
-  </div>
   <div class="fav-badges" id="favBadges">
     <div class="fav-chip" id="favClubChip" style="display:none">
       <span class="fav-chip-text">⭐ El teu equip: <strong id="favBadgeName"></strong></span>
@@ -716,22 +676,6 @@
     }catch(e){ /* ignore */ }
   }
 
-  var FAV_ONLY_KEY = 'agenda-hoquei-fecapa-nomes-favorits';
-
-  function loadFavOnly(){
-    try{
-      return window.localStorage.getItem(FAV_ONLY_KEY) === '1';
-    }catch(e){
-      return false;
-    }
-  }
-
-  function saveFavOnly(val){
-    try{
-      window.localStorage.setItem(FAV_ONLY_KEY, val ? '1' : '0');
-    }catch(e){ /* ignore */ }
-  }
-
   var MATCHES = RAW.map(function(r){
     var dateObj = parseDate(r[1]);
     return {
@@ -767,19 +711,26 @@
     compSelect.appendChild(opt);
   });
 
-  var state = {
-    q: '',
-    club: 0,
-    comp: -1,
-    period: 'all',
-    visibleCount: 60,
-    view: 'list',
-    calMonth: startOfMonth(new Date()),
-    calSelectedDate: null,
-    favClub: loadFavorite(),
-    favCompName: loadFavoriteCompName(),
-    favOnly: loadFavOnly()
-  };
+  var state = (function(){
+    var favClub = loadFavorite();
+    var favCompName = loadFavoriteCompName();
+    var favCompIdx = favCompName ? COMPS.indexOf(favCompName) : -1;
+    return {
+      q: '',
+      club: favClub || 0,
+      comp: favCompIdx,
+      period: 'all',
+      visibleCount: 60,
+      view: 'list',
+      calMonth: startOfMonth(new Date()),
+      calSelectedDate: null,
+      favClub: favClub,
+      favCompName: favCompName
+    };
+  })();
+
+  clubSelect.value = String(state.club);
+  if(state.comp !== -1) compSelect.value = String(state.comp);
 
   var PAGE_SIZE = 60;
 
@@ -799,38 +750,6 @@
   var favCompChip = document.getElementById('favCompChip');
   var favBadgeCompName = document.getElementById('favBadgeCompName');
   var favClearCompBtn = document.getElementById('favClearCompBtn');
-  var favOnlySeg = document.getElementById('favOnlySeg');
-
-  function setFavOnlyUI(active){
-    Array.prototype.forEach.call(favOnlySeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
-    favOnlySeg.querySelector('[data-favonly="' + (active ? '1' : '0') + '"]').classList.add('active');
-  }
-
-  function activateFavOnly(){
-    state.favOnly = true;
-    saveFavOnly(true);
-    setFavOnlyUI(true);
-    state.visibleCount = PAGE_SIZE;
-    render();
-  }
-
-  function deactivateFavOnly(){
-    state.favOnly = false;
-    saveFavOnly(false);
-    setFavOnlyUI(false);
-    state.visibleCount = PAGE_SIZE;
-    render();
-  }
-
-  favOnlySeg.addEventListener('click', function(e){
-    var btn = e.target.closest('button');
-    if(!btn) return;
-    if(btn.getAttribute('data-favonly') === '1'){
-      activateFavOnly();
-    } else {
-      deactivateFavOnly();
-    }
-  });
 
   function favCompIndex(){
     if(!state.favCompName) return -1;
@@ -988,13 +907,12 @@
     var keepMonth = state.calMonth;
     var keepFav = state.favClub;
     var keepFavComp = state.favCompName;
-    state = {q:'', club:0, comp:-1, period:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp, favOnly:false};
-    saveFavOnly(false);
+    var keepFavCompIdx = keepFavComp ? COMPS.indexOf(keepFavComp) : -1;
+    state = {q:'', club:keepFav || 0, comp:keepFavCompIdx, period:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp};
     searchInput.value = '';
-    clubSelect.value = '0';
-    compSelect.value = '-1';
+    clubSelect.value = String(state.club);
+    compSelect.value = String(state.comp);
     periodSelect.value = 'all';
-    setFavOnlyUI(false);
     updateFavUI();
     render();
   });
@@ -1022,14 +940,8 @@
     return MATCHES.filter(function(m){
       if(q && m.searchBlob.indexOf(q) === -1) return false;
 
-      if(state.favOnly){
-        var clubOk = state.favClub ? (m.club1 === state.favClub || m.club2 === state.favClub) : true;
-        var compOk = state.favCompName ? (COMPS[m.compIdx] === state.favCompName) : true;
-        if(!clubOk || !compOk) return false;
-      } else {
-        if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
-        if(comp !== -1 && m.compIdx !== comp) return false;
-      }
+      if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
+      if(comp !== -1 && m.compIdx !== comp) return false;
 
       if(period === 'today'){
         if(m.dateObj.getTime() !== today.getTime()) return false;
@@ -1099,22 +1011,6 @@
   }
 
   function render(){
-    if(state.favOnly && !state.favClub && !state.favCompName){
-      calendarRoot.style.display = 'none';
-      resultsRoot.style.display = '';
-      metaRow.textContent = 'Cap favorit desat encara';
-      resultsRoot.innerHTML = '';
-      var hint = document.createElement('div');
-      hint.className = 'fav-empty-hint';
-      hint.innerHTML = '<div class="big">⭐</div>Encara no tens cap equip ni competició preferits.<br>Marca\u2019n un amb l\u2019estrella ☆ del filtre de club o de competició.';
-      var backBtn = document.createElement('button');
-      backBtn.textContent = 'Veure tots els partits';
-      backBtn.addEventListener('click', deactivateFavOnly);
-      hint.appendChild(backBtn);
-      resultsRoot.appendChild(hint);
-      return;
-    }
-
     if(state.view === 'calendar'){
       resultsRoot.style.display = 'none';
       calendarRoot.style.display = '';
@@ -1133,10 +1029,7 @@
     resultsRoot.innerHTML = '';
 
     if(filtered.length === 0){
-      var emptyMsg = state.favOnly
-        ? 'Cap partit dels teus favorits coincideix amb la resta de filtres.<br>Prova de netejar la cerca, el període o l\u2019estat.'
-        : 'Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.';
-      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>' + emptyMsg + '</div>';
+      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.</div>';
       return;
     }
 
@@ -1318,7 +1211,6 @@
     calendarRoot.appendChild(panel);
   }
 
-  setFavOnlyUI(state.favOnly);
   updateFavUI();
   render();
   } // fi de boot()
