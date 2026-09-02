@@ -1125,9 +1125,9 @@
       if(q && m.searchBlob.indexOf(q) === -1) return false;
 
       if(state.favOnly){
-        var favClubMatch = state.favClub && (m.club1 === state.favClub || m.club2 === state.favClub);
-        var favCompMatch = state.favCompName && COMPS[m.compIdx] === state.favCompName;
-        if(!favClubMatch && !favCompMatch) return false;
+        var clubOk = state.favClub ? (m.club1 === state.favClub || m.club2 === state.favClub) : true;
+        var compOk = state.favCompName ? (COMPS[m.compIdx] === state.favCompName) : true;
+        if(!clubOk || !compOk) return false;
       } else {
         if(club !== 0){
           if(state.homeAway === 'home'){
