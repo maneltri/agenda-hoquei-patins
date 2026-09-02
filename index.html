@@ -271,11 +271,12 @@
   }
 
   .meta-row{
-    max-width:980px;
-    margin:0 auto;
-    padding:10px 18px 4px;
+    text-align:center;
+    padding-top:22px;
     font-size:13px;
     color:var(--text-soft);
+    border-top:1px solid var(--line);
+    margin-top:26px;
   }
 
   /* ---------- Results ---------- */
@@ -593,7 +594,6 @@
       <button class="fav-chip-clear" id="favClearCompBtn" title="Deixa de ser la competició preferida" aria-label="Treu competició preferida">✕</button>
     </div>
   </div>
-  <div class="meta-row" id="metaRow"></div>
 </div>
 
 <div class="view-toggle-wrap">
@@ -606,6 +606,7 @@
 <div class="content-wrap">
   <main id="resultsRoot"></main>
   <div id="calendarRoot" class="calendar-wrap" style="display:none"></div>
+  <div class="meta-row" id="metaRow"></div>
 </div>
 
 <footer>
