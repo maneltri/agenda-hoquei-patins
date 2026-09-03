@@ -531,11 +531,9 @@
       <button class="fav-btn" id="favCompBtn" type="button" title="Desa com a competició preferida" aria-label="Desa com a competició preferida">☆</button>
     </div>
     <select id="periodSelect">
-      <option value="all">Tota la temporada</option>
+      <option value="upcoming">Properes jornades</option>
       <option value="today">Avui</option>
-      <option value="7">Propers 7 dies</option>
-      <option value="15">Propers 15 dies</option>
-      <option value="30">Propers 30 dies</option>
+      <option value="all">Tota la temporada</option>
       <option value="past">Jornades passades</option>
     </select>
     <button class="reset-link" id="resetBtn">Neteja filtres</button>
@@ -719,7 +717,7 @@
       q: '',
       club: favClub || 0,
       comp: favCompIdx,
-      period: 'all',
+      period: 'upcoming',
       visibleCount: 60,
       view: 'list',
       calMonth: startOfMonth(new Date()),
@@ -908,11 +906,11 @@
     var keepFav = state.favClub;
     var keepFavComp = state.favCompName;
     var keepFavCompIdx = keepFavComp ? COMPS.indexOf(keepFavComp) : -1;
-    state = {q:'', club:keepFav || 0, comp:keepFavCompIdx, period:'all', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp};
+    state = {q:'', club:keepFav || 0, comp:keepFavCompIdx, period:'upcoming', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp};
     searchInput.value = '';
     clubSelect.value = String(state.club);
     compSelect.value = String(state.comp);
-    periodSelect.value = 'all';
+    periodSelect.value = 'upcoming';
     updateFavUI();
     render();
   });
@@ -931,12 +929,6 @@
     var comp = state.comp;
     var period = opts.ignorePeriod ? 'all' : state.period;
 
-    var periodEnd = null;
-    if(period !== 'all' && period !== 'past' && period !== 'today'){
-      periodEnd = new Date(today);
-      periodEnd.setDate(periodEnd.getDate() + parseInt(period,10));
-    }
-
     return MATCHES.filter(function(m){
       if(q && m.searchBlob.indexOf(q) === -1) return false;
 
@@ -947,8 +939,8 @@
         if(m.dateObj.getTime() !== today.getTime()) return false;
       } else if(period === 'past'){
         if(m.dateObj.getTime() >= today.getTime()) return false;
-      } else if(periodEnd){
-        if(m.dateObj.getTime() < today.getTime() || m.dateObj.getTime() > periodEnd.getTime()) return false;
+      } else if(period === 'upcoming'){
+        if(m.dateObj.getTime() < today.getTime()) return false;
       }
 
       return true;
