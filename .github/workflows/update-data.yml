@@ -3,7 +3,7 @@ name: Actualitza dades de l'agenda
 on:
   schedule:
     # Cada dia a les 05:00 UTC (≈ 06:00/07:00 hora de Catalunya segons l'horari d'estiu/hivern)
-    - cron: "0 5 * * *"
+    - cron: "*/15 * * * *" 
   workflow_dispatch: {}   # permet llançar-ho manualment des de la pestanya "Actions"
 
 permissions:
