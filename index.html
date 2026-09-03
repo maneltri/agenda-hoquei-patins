@@ -149,61 +149,110 @@
     color:var(--text);
     max-width:190px;
   }
-  .fav-field{
-    display:flex;
-    align-items:stretch;
-    gap:4px;
+  .msel{
+    position:relative;
   }
-  .fav-field select{max-width:170px;}
-  .fav-btn{
-    background:var(--ice);
+  .msel-btn{
+    padding:10px 30px 10px 12px;
     border:1.5px solid var(--line);
     border-radius:8px;
-    color:var(--wood-2);
-    font-size:17px;
-    width:40px;
+    font-family:inherit;
+    font-size:14px;
+    background:var(--ice);
+    color:var(--text);
+    max-width:190px;
+    text-align:left;
     cursor:pointer;
-    line-height:1;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    position:relative;
   }
-  .fav-btn:hover{background:#FDF1E7; border-color:var(--wood);}
-  .fav-btn.active{
-    background:var(--amber);
-    border-color:var(--amber);
-    color:#fff;
+  .msel-btn::after{
+    content:"▾";
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--text-soft);
+    font-size:11px;
   }
-  .fav-btn:disabled{opacity:0.4; cursor:not-allowed;}
-  .fav-badges{
-    max-width:980px;
-    margin:10px auto 0;
+  .msel-btn.has-selection{
+    border-color:var(--wood);
+    background:#FFF8F0;
+    color:var(--wood-2);
+    font-weight:600;
+  }
+  .msel-panel{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    width:260px;
+    max-width:80vw;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(15,35,64,0.15);
+    z-index:40;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
-    gap:6px;
   }
-  .fav-chip{
-    padding:9px 14px;
-    background:#FFF6EC;
-    border:1px solid #F0D9B8;
-    border-radius:8px;
+  .msel-panel[hidden]{display:none;}
+  .msel-search{
+    border:none;
+    border-bottom:1px solid var(--line);
+    padding:10px 12px;
+    font-family:inherit;
+    font-size:14px;
+    width:100%;
+  }
+  .msel-list{
+    max-height:260px;
+    overflow-y:auto;
+    padding:4px 0;
+  }
+  .msel-row{
     display:flex;
     align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-    font-size:13px;
-    color:var(--amber-ink);
+    gap:9px;
+    padding:8px 12px;
+    font-size:13.5px;
+    cursor:pointer;
   }
-  .fav-chip.comp-chip{background:#EEF4FB; border-color:#CBDCEF; color:var(--ink-2);}
-  .fav-chip-text strong{color:var(--wood-2);}
-  .comp-chip .fav-chip-text strong{color:var(--ink);}
-  .fav-chip-clear{
+  .msel-row:hover{background:var(--ice);}
+  .msel-row input{margin:0; flex-shrink:0;}
+  .msel-row.no-results{color:var(--text-soft); cursor:default;}
+  .msel-row.no-results:hover{background:none;}
+  .msel-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 12px;
+    border-top:1px solid var(--line);
+    background:var(--ice);
+  }
+  .msel-clear{
     background:none;
     border:none;
-    color:var(--amber-ink);
-    font-size:14px;
+    color:var(--ink-2);
+    font-size:12.5px;
+    font-weight:600;
+    text-decoration:underline;
     cursor:pointer;
-    margin-left:auto;
-    padding:2px 4px;
+    padding:0;
   }
-  .comp-chip .fav-chip-clear{color:var(--ink-2);}
+  .msel-done{
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:6px 14px;
+    border-radius:6px;
+    font-family:'Inter';
+    font-weight:600;
+    font-size:12.5px;
+    cursor:pointer;
+  }
 
   .segmented{
     display:flex;
@@ -287,12 +336,6 @@
     gap:4px 12px;
     align-items:center;
   }
-  .match-card.fav-match{
-    border-color:var(--amber);
-    border-left:4px solid var(--amber);
-    background:#FFFBF6;
-  }
-  .fav-star{color:var(--amber); font-size:12px; margin-right:2px;}
   .m-time{
     font-family:'Oswald';
     font-weight:600;
@@ -522,13 +565,27 @@
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Cerca equip, competició o pista…" autocomplete="off">
     </div>
-    <div class="fav-field">
-      <select id="clubSelect"><option value="0">Tots els clubs</option></select>
-      <button class="fav-btn" id="favBtn" type="button" title="Desa com a equip preferit" aria-label="Desa com a equip preferit">☆</button>
+    <div class="msel" id="clubMsel">
+      <button type="button" class="msel-btn" id="clubMselBtn">Tots els clubs</button>
+      <div class="msel-panel" id="clubMselPanel" hidden>
+        <input type="text" class="msel-search" id="clubMselSearch" placeholder="Cerca club…" autocomplete="off">
+        <div class="msel-list" id="clubMselList"></div>
+        <div class="msel-footer">
+          <button type="button" class="msel-clear" id="clubMselClear">Neteja</button>
+          <button type="button" class="msel-done" id="clubMselDone">Fet</button>
+        </div>
+      </div>
     </div>
-    <div class="fav-field">
-      <select id="compSelect"><option value="-1">Totes les competicions</option></select>
-      <button class="fav-btn" id="favCompBtn" type="button" title="Desa com a competició preferida" aria-label="Desa com a competició preferida">☆</button>
+    <div class="msel" id="compMsel">
+      <button type="button" class="msel-btn" id="compMselBtn">Totes les competicions</button>
+      <div class="msel-panel" id="compMselPanel" hidden>
+        <input type="text" class="msel-search" id="compMselSearch" placeholder="Cerca competició…" autocomplete="off">
+        <div class="msel-list" id="compMselList"></div>
+        <div class="msel-footer">
+          <button type="button" class="msel-clear" id="compMselClear">Neteja</button>
+          <button type="button" class="msel-done" id="compMselDone">Fet</button>
+        </div>
+      </div>
     </div>
     <select id="periodSelect">
       <option value="upcoming">Properes jornades</option>
@@ -537,16 +594,6 @@
       <option value="past">Jornades passades</option>
     </select>
     <button class="reset-link" id="resetBtn">Neteja filtres</button>
-  </div>
-  <div class="fav-badges" id="favBadges">
-    <div class="fav-chip" id="favClubChip" style="display:none">
-      <span class="fav-chip-text">⭐ El teu equip: <strong id="favBadgeName"></strong></span>
-      <button class="fav-chip-clear" id="favClearBtn" title="Deixa de ser el teu equip preferit" aria-label="Treu equip preferit">✕</button>
-    </div>
-    <div class="fav-chip comp-chip" id="favCompChip" style="display:none">
-      <span class="fav-chip-text">🏆 Competició preferida: <strong id="favBadgeCompName"></strong></span>
-      <button class="fav-chip-clear" id="favClearCompBtn" title="Deixa de ser la competició preferida" aria-label="Treu competició preferida">✕</button>
-    </div>
   </div>
 </div>
 
@@ -564,7 +611,7 @@
 </div>
 
 <footer>
-  Dades extretes de l'agenda pública de la Federació Catalana de Patinatge (FECAPA) el 01/09/2026 · Eina no oficial, sense cap vincle amb la FECAPA · Font original: <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>
+  Dades extretes de l'agenda pública de la Federació Catalana de Patinatge (FECAPA) — darrera actualització: <span id="footerUpdated">carregant…</span> · Eina no oficial, sense cap vincle amb la FECAPA · Font original: <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>
 </footer>
 
 <script>
@@ -572,6 +619,7 @@
   "use strict";
 
   var updatedBadge = document.getElementById('updatedBadge');
+  var footerUpdated = document.getElementById('footerUpdated');
   var resultsRootEarly = document.getElementById('resultsRoot');
 
   fetch('data.json', {cache: 'no-store'})
@@ -581,10 +629,12 @@
     })
     .then(function(DATA){
       updatedBadge.textContent = 'Dades actualitzades: ' + (DATA.generated || 'desconegut');
+      footerUpdated.textContent = DATA.generated || 'desconegut';
       boot(DATA);
     })
     .catch(function(err){
       updatedBadge.textContent = 'No s\u2019han pogut carregar les dades';
+      footerUpdated.textContent = 'desconeguda';
       resultsRootEarly.innerHTML =
         '<div class="empty-state"><div class="big">\u26A0\uFE0F</div>' +
         'No s\u2019ha pogut carregar <code>data.json</code>.<br>' +
@@ -691,44 +741,44 @@
     };
   });
 
-  // ---- Populate club select ----
-  var clubSelect = document.getElementById('clubSelect');
-  CLUBS.forEach(function(c){
-    var opt = document.createElement('option');
-    opt.value = c[0];
-    opt.textContent = c[1];
-    clubSelect.appendChild(opt);
-  });
+  // ---- Favorites storage (arrays; clubs by id, competitions by name) ----
+  var FAV_CLUBS_KEY = 'agenda-hoquei-fecapa-clubs-preferits';
+  var FAV_COMPS_KEY = 'agenda-hoquei-fecapa-competicions-preferides';
 
-  // ---- Populate competition select ----
-  var compSelect = document.getElementById('compSelect');
-  COMPS.forEach(function(name, idx){
-    var opt = document.createElement('option');
-    opt.value = idx;
-    opt.textContent = name;
-    compSelect.appendChild(opt);
-  });
+  function loadArray(key){
+    try{
+      var raw = window.localStorage.getItem(key);
+      if(!raw) return [];
+      var arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr : [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  function saveArray(key, arr){
+    try{
+      window.localStorage.setItem(key, JSON.stringify(arr));
+    }catch(e){ /* ignore */ }
+  }
 
   var state = (function(){
-    var favClub = loadFavorite();
-    var favCompName = loadFavoriteCompName();
-    var favCompIdx = favCompName ? COMPS.indexOf(favCompName) : -1;
+    var favClubs = loadArray(FAV_CLUBS_KEY);
+    var favCompNames = loadArray(FAV_COMPS_KEY);
+    var favCompIdxs = favCompNames
+      .map(function(n){ return COMPS.indexOf(n); })
+      .filter(function(i){ return i !== -1; });
     return {
       q: '',
-      club: favClub || 0,
-      comp: favCompIdx,
+      clubs: favClubs.slice(),
+      comps: favCompIdxs.slice(),
       period: 'upcoming',
       visibleCount: 60,
       view: 'list',
       calMonth: startOfMonth(new Date()),
-      calSelectedDate: null,
-      favClub: favClub,
-      favCompName: favCompName
+      calSelectedDate: null
     };
   })();
-
-  clubSelect.value = String(state.club);
-  if(state.comp !== -1) compSelect.value = String(state.comp);
 
   var PAGE_SIZE = 60;
 
@@ -739,124 +789,144 @@
   var resultsRoot = document.getElementById('resultsRoot');
   var calendarRoot = document.getElementById('calendarRoot');
   var metaRow = document.getElementById('metaRow');
-  var favBtn = document.getElementById('favBtn');
-  var favBadges = document.getElementById('favBadges');
-  var favClubChip = document.getElementById('favClubChip');
-  var favBadgeName = document.getElementById('favBadgeName');
-  var favClearBtn = document.getElementById('favClearBtn');
-  var favCompBtn = document.getElementById('favCompBtn');
-  var favCompChip = document.getElementById('favCompChip');
-  var favBadgeCompName = document.getElementById('favBadgeCompName');
-  var favClearCompBtn = document.getElementById('favClearCompBtn');
 
-  function favCompIndex(){
-    if(!state.favCompName) return -1;
-    return COMPS.indexOf(state.favCompName);
-  }
+  // ---- Generic multi-select dropdown (club / competition) ----
+  function createMultiSelect(opts){
+    var selectedSet = new Set(opts.getSelected());
 
-  function clubNameById(id){
-    for(var i=0;i<CLUBS.length;i++){
-      if(CLUBS[i][0] === id) return CLUBS[i][1];
-    }
-    return null;
-  }
-
-  function updateFavUI(){
-    var favCompIdx = favCompIndex();
-
-    if(state.favClub){
-      var name = clubNameById(state.favClub);
-      favClubChip.style.display = 'flex';
-      favBadgeName.textContent = name || ('Club #' + state.favClub);
-    } else {
-      favClubChip.style.display = 'none';
+    function labelFor(value){
+      for(var i=0;i<opts.items.length;i++){
+        if(opts.items[i][0] === value) return opts.items[i][1];
+      }
+      return null;
     }
 
-    if(state.favCompName){
-      favCompChip.style.display = 'flex';
-      favBadgeCompName.textContent = favCompIdx !== -1
-        ? state.favCompName
-        : state.favCompName + ' (no disponible ara mateix)';
-    } else {
-      favCompChip.style.display = 'none';
-    }
-
-    favBadges.style.display = (state.favClub || state.favCompName) ? 'flex' : 'none';
-
-    if(state.club === 0){
-      favBtn.disabled = true;
-      favBtn.textContent = '☆';
-      favBtn.classList.remove('active');
-    } else {
-      favBtn.disabled = false;
-      if(state.club === state.favClub){
-        favBtn.textContent = '★';
-        favBtn.classList.add('active');
-        favBtn.title = 'Treu com a equip preferit';
+    function updateButtonLabel(){
+      var n = selectedSet.size;
+      if(n === 0){
+        opts.btn.textContent = opts.placeholder;
+        opts.btn.classList.remove('has-selection');
+        return;
+      }
+      opts.btn.classList.add('has-selection');
+      if(n <= 2){
+        var names = [];
+        selectedSet.forEach(function(v){
+          var l = labelFor(v);
+          if(l) names.push(l);
+        });
+        opts.btn.textContent = names.join(', ');
       } else {
-        favBtn.textContent = '☆';
-        favBtn.classList.remove('active');
-        favBtn.title = 'Desa com a equip preferit';
+        opts.btn.textContent = n + ' ' + opts.labelPlural + ' seleccionades';
       }
     }
 
-    if(state.comp === -1){
-      favCompBtn.disabled = true;
-      favCompBtn.textContent = '☆';
-      favCompBtn.classList.remove('active');
-    } else {
-      favCompBtn.disabled = false;
-      if(COMPS[state.comp] === state.favCompName){
-        favCompBtn.textContent = '★';
-        favCompBtn.classList.add('active');
-        favCompBtn.title = 'Treu com a competició preferida';
-      } else {
-        favCompBtn.textContent = '☆';
-        favCompBtn.classList.remove('active');
-        favCompBtn.title = 'Desa com a competició preferida';
+    function renderList(filterText){
+      opts.listEl.innerHTML = '';
+      var ft = filterText ? stripAccents(filterText) : '';
+      var any = false;
+      opts.items.forEach(function(item){
+        var value = item[0], label = item[1];
+        if(ft && stripAccents(label).indexOf(ft) === -1) return;
+        any = true;
+        var row = document.createElement('label');
+        row.className = 'msel-row';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = selectedSet.has(value);
+        cb.addEventListener('change', function(){
+          if(cb.checked){ selectedSet.add(value); } else { selectedSet.delete(value); }
+          updateButtonLabel();
+          opts.onChange(Array.from(selectedSet));
+        });
+        var span = document.createElement('span');
+        span.textContent = label;
+        row.appendChild(cb);
+        row.appendChild(span);
+        opts.listEl.appendChild(row);
+      });
+      if(!any){
+        var none = document.createElement('div');
+        none.className = 'msel-row no-results';
+        none.textContent = 'Cap resultat';
+        opts.listEl.appendChild(none);
       }
     }
+
+    function closePanel(){
+      opts.panel.hidden = true;
+    }
+
+    function openPanel(){
+      document.dispatchEvent(new CustomEvent('msel:closeall'));
+      opts.searchInput.value = '';
+      renderList('');
+      opts.panel.hidden = false;
+    }
+
+    opts.btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(opts.panel.hidden){ openPanel(); } else { closePanel(); }
+    });
+    opts.searchInput.addEventListener('input', function(){
+      renderList(opts.searchInput.value);
+    });
+    opts.clearBtn.addEventListener('click', function(){
+      selectedSet.clear();
+      renderList(opts.searchInput.value);
+      updateButtonLabel();
+      opts.onChange([]);
+    });
+    opts.doneBtn.addEventListener('click', function(){
+      closePanel();
+    });
+    opts.panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('msel:closeall', closePanel);
+
+    updateButtonLabel();
   }
 
-  favBtn.addEventListener('click', function(){
-    if(state.club === 0) return;
-    if(state.club === state.favClub){
-      removeFavorite();
-      state.favClub = null;
-    } else {
-      saveFavorite(state.club);
-      state.favClub = state.club;
+  document.addEventListener('click', function(){
+    document.dispatchEvent(new CustomEvent('msel:closeall'));
+  });
+
+  var clubMultiSelect = createMultiSelect({
+    btn: document.getElementById('clubMselBtn'),
+    panel: document.getElementById('clubMselPanel'),
+    searchInput: document.getElementById('clubMselSearch'),
+    listEl: document.getElementById('clubMselList'),
+    clearBtn: document.getElementById('clubMselClear'),
+    doneBtn: document.getElementById('clubMselDone'),
+    items: CLUBS,
+    placeholder: 'Tots els clubs',
+    labelPlural: 'clubs',
+    getSelected: function(){ return state.clubs.slice(); },
+    onChange: function(newSelected){
+      state.clubs = newSelected;
+      saveArray(FAV_CLUBS_KEY, newSelected);
+      state.visibleCount = PAGE_SIZE;
+      render();
     }
-    updateFavUI();
-    render();
   });
 
-  favClearBtn.addEventListener('click', function(){
-    removeFavorite();
-    state.favClub = null;
-    updateFavUI();
-    render();
-  });
-
-  favCompBtn.addEventListener('click', function(){
-    if(state.comp === -1) return;
-    var currentName = COMPS[state.comp];
-    if(currentName === state.favCompName){
-      removeFavoriteCompName();
-      state.favCompName = null;
-    } else {
-      saveFavoriteCompName(currentName);
-      state.favCompName = currentName;
+  var compItems = COMPS.map(function(name, idx){ return [idx, name]; });
+  var compMultiSelect = createMultiSelect({
+    btn: document.getElementById('compMselBtn'),
+    panel: document.getElementById('compMselPanel'),
+    searchInput: document.getElementById('compMselSearch'),
+    listEl: document.getElementById('compMselList'),
+    clearBtn: document.getElementById('compMselClear'),
+    doneBtn: document.getElementById('compMselDone'),
+    items: compItems,
+    placeholder: 'Totes les competicions',
+    labelPlural: 'competicions',
+    getSelected: function(){ return state.comps.slice(); },
+    onChange: function(newSelected){
+      state.comps = newSelected;
+      saveArray(FAV_COMPS_KEY, newSelected.map(function(i){ return COMPS[i]; }));
+      state.visibleCount = PAGE_SIZE;
+      render();
     }
-    updateFavUI();
-    render();
-  });
-
-  favClearCompBtn.addEventListener('click', function(){
-    removeFavoriteCompName();
-    state.favCompName = null;
-    updateFavUI();
-    render();
   });
 
   var debounceTimer = null;
@@ -868,20 +938,6 @@
       state.visibleCount = PAGE_SIZE;
       render();
     }, 150);
-  });
-
-  clubSelect.addEventListener('change', function(){
-    state.club = parseInt(clubSelect.value,10);
-    state.visibleCount = PAGE_SIZE;
-    updateFavUI();
-    render();
-  });
-
-  compSelect.addEventListener('change', function(){
-    state.comp = parseInt(compSelect.value,10);
-    state.visibleCount = PAGE_SIZE;
-    updateFavUI();
-    render();
   });
 
   periodSelect.addEventListener('change', function(){
@@ -901,17 +957,11 @@
   });
 
   resetBtn.addEventListener('click', function(){
-    var keepView = state.view;
-    var keepMonth = state.calMonth;
-    var keepFav = state.favClub;
-    var keepFavComp = state.favCompName;
-    var keepFavCompIdx = keepFavComp ? COMPS.indexOf(keepFavComp) : -1;
-    state = {q:'', club:keepFav || 0, comp:keepFavCompIdx, period:'upcoming', visibleCount:PAGE_SIZE, view:keepView, calMonth:keepMonth, calSelectedDate:null, favClub:keepFav, favCompName:keepFavComp};
+    state.q = '';
+    state.period = 'upcoming';
+    state.visibleCount = PAGE_SIZE;
     searchInput.value = '';
-    clubSelect.value = String(state.club);
-    compSelect.value = String(state.comp);
     periodSelect.value = 'upcoming';
-    updateFavUI();
     render();
   });
 
@@ -925,15 +975,15 @@
     opts = opts || {};
     var today = todayMidnight();
     var q = state.q;
-    var club = state.club;
-    var comp = state.comp;
+    var clubsSet = state.clubs.length ? new Set(state.clubs) : null;
+    var compsSet = state.comps.length ? new Set(state.comps) : null;
     var period = opts.ignorePeriod ? 'all' : state.period;
 
     return MATCHES.filter(function(m){
       if(q && m.searchBlob.indexOf(q) === -1) return false;
 
-      if(club !== 0 && m.club1 !== club && m.club2 !== club) return false;
-      if(comp !== -1 && m.compIdx !== comp) return false;
+      if(clubsSet && !clubsSet.has(m.club1) && !clubsSet.has(m.club2)) return false;
+      if(compsSet && !compsSet.has(m.compIdx)) return false;
 
       if(period === 'today'){
         if(m.dateObj.getTime() !== today.getTime()) return false;
@@ -960,11 +1010,6 @@
   function buildMatchCard(m){
     var card = document.createElement('div');
     card.className = 'match-card';
-    var isFavClubMatch = state.favClub && (m.club1 === state.favClub || m.club2 === state.favClub);
-    var isFavCompMatch = state.favCompName && COMPS[m.compIdx] === state.favCompName;
-    if(isFavClubMatch || isFavCompMatch){
-      card.className += ' fav-match';
-    }
 
     var timeEl = document.createElement('div');
     timeEl.className = 'm-time';
@@ -972,14 +1017,11 @@
 
     var compEl = document.createElement('div');
     compEl.className = 'm-comp';
-    compEl.innerHTML = (isFavCompMatch ? '🏆 ' : '') + escapeHtml(COMPS[m.compIdx]);
-
-    var homeStar = (state.favClub && m.club1 === state.favClub) ? '<span class="fav-star">★</span>' : '';
-    var awayStar = (state.favClub && m.club2 === state.favClub) ? '<span class="fav-star">★</span>' : '';
+    compEl.textContent = COMPS[m.compIdx];
 
     var teamsEl = document.createElement('div');
     teamsEl.className = 'm-teams';
-    teamsEl.innerHTML = '<span>' + homeStar + escapeHtml(m.home) + '</span><span class="vs">vs</span><span>' + awayStar + escapeHtml(m.away) + '</span>';
+    teamsEl.innerHTML = '<span>' + escapeHtml(m.home) + '</span><span class="vs">vs</span><span>' + escapeHtml(m.away) + '</span>';
 
     var venueEl = document.createElement('div');
     venueEl.className = 'm-venue';
@@ -1203,7 +1245,6 @@
     calendarRoot.appendChild(panel);
   }
 
-  updateFavUI();
   render();
   } // fi de boot()
 })();
