@@ -254,33 +254,6 @@
     cursor:pointer;
   }
 
-  /* On narrow screens, stack filters vertically in a fixed, predictable order
-     instead of letting them wrap and reflow based on each control's content
-     width (e.g. the multi-select buttons growing/shrinking with the label). */
-  @media (max-width:640px){
-    .filters{
-      flex-direction:column;
-      align-items:stretch;
-    }
-    .search-box,
-    .msel,
-    .msel-btn,
-    #periodSelect{
-      width:100%;
-      max-width:none;
-    }
-    .msel-panel{
-      left:0;
-      right:0;
-      width:auto;
-      max-width:none;
-    }
-    .reset-link{
-      text-align:center;
-      margin-top:2px;
-    }
-  }
-
   .segmented{
     display:flex;
     border:1.5px solid var(--line);
