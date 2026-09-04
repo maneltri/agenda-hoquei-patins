@@ -114,7 +114,7 @@
   }
   .search-box input{
     width:100%;
-    padding:10px 12px 10px 34px;
+    padding:10px 12px;
     border:1.5px solid var(--line);
     border-radius:8px;
     font-size:14.5px;
@@ -123,22 +123,6 @@
     color:var(--text);
   }
   .search-box input:focus{background:#fff;}
-  .search-box::before{
-    content:"";
-    position:absolute;
-    left:11px; top:50%; transform:translateY(-50%);
-    width:15px;height:15px;
-    border:2px solid var(--text-soft);
-    border-radius:50%;
-  }
-  .search-box::after{
-    content:"";
-    position:absolute;
-    left:22px; top:62%;
-    width:7px;height:2px;
-    background:var(--text-soft);
-    transform:rotate(45deg);
-  }
   select{
     padding:10px 10px;
     border:1.5px solid var(--line);
@@ -252,6 +236,33 @@
     font-weight:600;
     font-size:12.5px;
     cursor:pointer;
+  }
+
+  /* On narrow screens, stack filters vertically in a fixed, predictable order
+     instead of letting them wrap and reflow based on each control's content
+     width (e.g. the multi-select buttons growing/shrinking with the label). */
+  @media (max-width:640px){
+    .filters{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    .search-box,
+    .msel,
+    .msel-btn,
+    #periodSelect{
+      width:100%;
+      max-width:none;
+    }
+    .msel-panel{
+      left:0;
+      right:0;
+      width:auto;
+      max-width:none;
+    }
+    .reset-link{
+      text-align:center;
+      margin-top:2px;
+    }
   }
 
   .segmented{
