@@ -6,87 +6,73 @@
 <title>Agenda Hoquei Patins Catalunya (no oficial)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0F2340;
-    --ink-2:#173257;
-    --wood:#B5651D;
-    --wood-2:#8C4E16;
-    --ice:#F2F5F4;
-    --paper:#FFFFFF;
-    --line:#DDE4E6;
-    --amber:#F2934E;
-    --amber-ink:#7A3B0F;
-    --text:#1C2733;
-    --text-soft:#5A6B78;
-    --played-bg:#EAF3EC;
-    --played-ink:#2E6B48;
-    --focus:#1E6FEB;
+    --ink:#1C2024;
+    --body:#3F4348;
+    --muted:#6B7075;
+    --faint:#9BA0A6;
+    --border:#E1E3E7;
+    --surface:#FFFFFF;
+    --surface-2:#F6F7F8;
+    --accent:#3355D8;
+    --accent-hover:#2945B3;
+    --accent-tint:#EEF1FC;
+    --focus:#3355D8;
+    --radius:6px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--ice);
-    color:var(--text);
-    font-family:'Inter',system-ui,sans-serif;
+    background:var(--surface-2);
+    color:var(--body);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
     font-size:15px;
-    line-height:1.45;
+    line-height:1.5;
   }
-  h1,h2,h3,.display{
-    font-family:'Oswald',system-ui,sans-serif;
-    font-weight:600;
-    letter-spacing:0.01em;
+  h1,h2,h3{
+    font-family:inherit;
+    font-weight:700;
+    color:var(--ink);
+    margin:0;
   }
   a{color:inherit;}
-  :focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
 
   /* ---------- Header ---------- */
   header.top{
-    background:linear-gradient(180deg,var(--ink) 0%,var(--ink-2) 100%);
+    background:var(--ink);
     color:#fff;
-    padding:22px 18px 18px;
-    border-bottom:5px solid var(--wood);
+    padding:26px 18px 20px;
+    border-bottom:2px solid var(--accent);
   }
   .top-inner{
-    max-width:980px;
+    max-width:760px;
     margin:0 auto;
   }
-  .kicker{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:13px;
-    color:#BFD0E6;
-    margin-bottom:6px;
-  }
-  .puck{
-    width:10px;height:10px;border-radius:50%;
-    background:var(--amber);
-    display:inline-block;
-  }
   h1.display{
-    font-size:clamp(26px,5vw,38px);
-    margin:0 0 6px;
-    line-height:1.05;
+    font-size:clamp(24px,4.5vw,32px);
+    font-weight:700;
+    margin:0 0 8px;
+    line-height:1.2;
+    color:#fff;
   }
   .sub{
-    color:#CBD9EA;
-    font-size:13.5px;
+    color:#C7CBD6;
+    font-size:14px;
     max-width:520px;
-    line-height:1.5;
+    line-height:1.55;
   }
-  .sub a{color:#fff; text-decoration:underline;}
+  .sub a{color:#fff; text-decoration:underline; text-underline-offset:2px;}
   .updated{
-    margin-top:10px;
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:12px;
-    color:#BFD0E6;
-    background:rgba(255,255,255,0.08);
+    margin-top:12px;
+    display:inline-block;
+    font-size:12.5px;
+    color:#C7CBD6;
+    background:rgba(255,255,255,0.1);
     padding:4px 10px;
-    border-radius:20px;
+    border-radius:var(--radius);
   }
 
   /* ---------- Filters ---------- */
@@ -94,13 +80,12 @@
     position:sticky;
     top:0;
     z-index:20;
-    background:var(--paper);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 2px 8px rgba(15,35,64,0.06);
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
     padding-bottom:14px;
   }
   .filters{
-    max-width:980px;
+    max-width:760px;
     margin:0 auto;
     padding:14px 18px;
     display:flex;
@@ -115,22 +100,23 @@
   .search-box input{
     width:100%;
     padding:10px 12px;
-    border:1.5px solid var(--line);
-    border-radius:8px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
     font-size:14.5px;
     font-family:inherit;
-    background:var(--ice);
-    color:var(--text);
+    background:var(--surface-2);
+    color:var(--ink);
   }
-  .search-box input:focus{background:#fff;}
+  .search-box input::placeholder{color:var(--faint);}
+  .search-box input:focus{background:var(--surface); border-color:var(--accent);}
   select{
     padding:10px 10px;
-    border:1.5px solid var(--line);
-    border-radius:8px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
     font-family:inherit;
     font-size:14px;
-    background:var(--ice);
-    color:var(--text);
+    background:var(--surface-2);
+    color:var(--ink);
     max-width:190px;
   }
   .msel{
@@ -138,12 +124,12 @@
   }
   .msel-btn{
     padding:10px 30px 10px 12px;
-    border:1.5px solid var(--line);
-    border-radius:8px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
     font-family:inherit;
     font-size:14px;
-    background:var(--ice);
-    color:var(--text);
+    background:var(--surface-2);
+    color:var(--ink);
     max-width:190px;
     text-align:left;
     cursor:pointer;
@@ -153,18 +139,20 @@
     position:relative;
   }
   .msel-btn::after{
-    content:"▾";
+    content:"";
     position:absolute;
-    right:10px;
+    right:12px;
     top:50%;
-    transform:translateY(-50%);
-    color:var(--text-soft);
-    font-size:11px;
+    width:7px;
+    height:7px;
+    border-right:1.5px solid var(--muted);
+    border-bottom:1.5px solid var(--muted);
+    transform:translateY(-65%) rotate(45deg);
   }
   .msel-btn.has-selection{
-    border-color:var(--wood);
-    background:#FFF8F0;
-    color:var(--wood-2);
+    border-color:var(--accent);
+    background:var(--accent-tint);
+    color:var(--accent-hover);
     font-weight:600;
   }
   .msel-panel{
@@ -173,10 +161,10 @@
     left:0;
     width:260px;
     max-width:80vw;
-    background:var(--paper);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    box-shadow:0 8px 24px rgba(15,35,64,0.15);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:0 8px 24px rgba(28,32,36,0.14);
     z-index:40;
     overflow:hidden;
     display:flex;
@@ -185,7 +173,7 @@
   .msel-panel[hidden]{display:none;}
   .msel-search{
     border:none;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--border);
     padding:10px 12px;
     font-family:inherit;
     font-size:14px;
@@ -204,25 +192,29 @@
     font-size:13.5px;
     cursor:pointer;
   }
-  .msel-row:hover{background:var(--ice);}
-  .msel-row input{margin:0; flex-shrink:0;}
-  .msel-row.no-results{color:var(--text-soft); cursor:default;}
+  .msel-row:hover{background:var(--surface-2);}
+  .msel-row input{margin:0; flex-shrink:0; accent-color:var(--accent);}
+  .msel-row.no-results{color:var(--muted); cursor:default;}
   .msel-row.no-results:hover{background:none;}
+  .msel-row.selected{
+    background:var(--accent-tint);
+    color:var(--accent-hover);
+    font-weight:600;
+  }
   .msel-footer{
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:8px 12px;
-    border-top:1px solid var(--line);
-    background:var(--ice);
+    border-top:1px solid var(--border);
+    background:var(--surface-2);
   }
   .msel-clear{
     background:none;
     border:none;
-    color:var(--ink-2);
+    color:var(--accent);
     font-size:12.5px;
     font-weight:600;
-    text-decoration:underline;
     cursor:pointer;
     padding:0;
   }
@@ -231,8 +223,8 @@
     color:#fff;
     border:none;
     padding:6px 14px;
-    border-radius:6px;
-    font-family:'Inter';
+    border-radius:var(--radius);
+    font-family:inherit;
     font-weight:600;
     font-size:12.5px;
     cursor:pointer;
@@ -248,8 +240,7 @@
     }
     .search-box,
     .msel,
-    .msel-btn,
-    #periodSelect{
+    .msel-btn{
       width:100%;
       max-width:none;
       flex:0 0 auto;
@@ -268,20 +259,20 @@
 
   .segmented{
     display:flex;
-    border:1.5px solid var(--line);
-    border-radius:8px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
     overflow:hidden;
   }
   .segmented button{
     border:none;
-    background:var(--ice);
-    color:var(--text-soft);
+    background:var(--surface-2);
+    color:var(--muted);
     padding:9px 13px;
-    font-family:'Inter';
+    font-family:inherit;
     font-size:13.5px;
     font-weight:600;
     cursor:pointer;
-    border-right:1px solid var(--line);
+    border-right:1px solid var(--border);
   }
   .segmented button:last-child{border-right:none;}
   .segmented button.active{
@@ -291,81 +282,68 @@
   .reset-link{
     background:none;
     border:none;
-    color:var(--ink-2);
+    color:var(--accent);
     font-size:13.5px;
     font-weight:600;
     cursor:pointer;
-    text-decoration:underline;
     padding:6px 4px;
   }
+  .reset-link:hover{text-decoration:underline;}
 
   .meta-row{
     text-align:center;
     padding-top:22px;
     font-size:13px;
-    color:var(--text-soft);
-    border-top:1px solid var(--line);
+    color:var(--muted);
+    border-top:1px solid var(--border);
     margin-top:26px;
   }
 
   /* ---------- Results ---------- */
   .content-wrap{
-    max-width:980px;
+    max-width:760px;
     margin:0 auto;
     padding:6px 18px 60px;
   }
-  .day-group{margin-top:22px;}
+  .day-group{margin-top:24px;}
   .day-heading{
-    font-family:'Oswald';
     font-size:14px;
     font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:var(--ink-2);
+    color:var(--ink);
     padding:6px 0;
-    border-bottom:2px solid var(--wood);
-    margin-bottom:8px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:4px;
     display:flex;
     justify-content:space-between;
   }
   .day-heading .count{
-    color:var(--text-soft);
-    font-weight:500;
-    text-transform:none;
-    letter-spacing:0;
-    font-family:'Inter';
+    color:var(--muted);
+    font-weight:400;
     font-size:12.5px;
   }
 
   .match-card{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:10px 14px;
-    margin-bottom:8px;
+    padding:12px 4px;
+    border-bottom:1px solid var(--border);
     display:grid;
-    grid-template-columns:56px 1fr auto;
-    gap:4px 12px;
+    grid-template-columns:48px 1fr auto;
+    gap:2px 12px;
     align-items:center;
   }
+  .day-group .match-card:last-child{border-bottom:none;}
   .m-time{
-    font-family:'Oswald';
+    font-variant-numeric:tabular-nums;
     font-weight:600;
-    font-size:15px;
+    font-size:14px;
     color:var(--ink);
-    text-align:center;
-    background:var(--ice);
-    border-radius:6px;
-    padding:6px 2px;
+    text-align:left;
     grid-row:1 / 3;
   }
   .m-comp{
     grid-column:2;
-    font-size:11.5px;
-    color:var(--text-soft);
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:0.03em;
+    font-size:12px;
+    color:var(--muted);
+    font-weight:500;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
@@ -378,39 +356,41 @@
     flex-wrap:wrap;
     font-size:14.5px;
     font-weight:500;
+    color:var(--ink);
   }
-  .m-teams .vs{color:var(--text-soft); font-size:12.5px;}
+  .m-teams .vs{color:var(--faint); font-size:12.5px; font-weight:400;}
   .m-venue{
     grid-column:2;
     font-size:12px;
-    color:var(--text-soft);
+    color:var(--muted);
     margin-top:1px;
   }
+  .m-venue .venue-link{
+    color:var(--muted);
+    text-decoration:none;
+    border-bottom:1px dotted var(--faint);
+  }
+  .m-venue .venue-link:hover{color:var(--accent); border-color:var(--accent);}
   .m-score{
     grid-column:3;
     grid-row:1/3;
-    font-family:'Oswald';
     font-variant-numeric:tabular-nums;
-    font-weight:700;
-    font-size:18px;
-    padding:6px 12px;
-    border-radius:6px;
     white-space:nowrap;
+    text-align:right;
   }
-  .m-score.played{background:var(--played-bg); color:var(--played-ink);}
-  .m-score.upcoming{background:#EFF3FA; color:var(--ink-2); font-size:13px; font-weight:600;}
+  .m-score.played{color:var(--ink); font-weight:700; font-size:16px;}
+  .m-score.upcoming{color:var(--faint); font-weight:500; font-size:12.5px;}
 
   @media (max-width:520px){
-    .match-card{grid-template-columns:48px 1fr;}
-    .m-score{grid-column:2; grid-row:auto; justify-self:start; margin-top:4px;}
+    .match-card{grid-template-columns:40px 1fr;}
+    .m-score{grid-column:2; grid-row:auto; justify-self:start; margin-top:4px; text-align:left;}
   }
 
   .empty-state{
     text-align:center;
     padding:60px 20px;
-    color:var(--text-soft);
+    color:var(--muted);
   }
-  .empty-state .big{font-size:34px; margin-bottom:8px;}
 
   .load-more-wrap{
     text-align:center;
@@ -421,17 +401,17 @@
     color:#fff;
     border:none;
     padding:12px 26px;
-    border-radius:8px;
-    font-family:'Inter';
+    border-radius:var(--radius);
+    font-family:inherit;
     font-weight:600;
     font-size:14px;
     cursor:pointer;
   }
-  .load-more:hover{background:var(--ink-2);}
+  .load-more:hover{background:var(--accent-hover);}
 
   /* ---------- View toggle ---------- */
   .view-toggle-wrap{
-    max-width:980px;
+    max-width:760px;
     margin:0 auto;
     padding:12px 18px 0;
   }
@@ -446,8 +426,7 @@
     margin-bottom:10px;
   }
   .cal-title{
-    font-family:'Oswald';
-    font-size:20px;
+    font-size:18px;
     font-weight:600;
     text-transform:capitalize;
     color:var(--ink);
@@ -455,30 +434,29 @@
     text-align:center;
   }
   .cal-nav-btn{
-    background:var(--paper);
-    border:1.5px solid var(--line);
+    background:var(--surface);
+    border:1px solid var(--border);
     color:var(--ink);
-    width:34px;height:34px;
-    border-radius:8px;
-    font-size:18px;
+    width:32px;height:32px;
+    border-radius:var(--radius);
+    font-size:16px;
     line-height:1;
     cursor:pointer;
   }
-  .cal-nav-btn:hover{background:var(--ice);}
+  .cal-nav-btn:hover{background:var(--surface-2);}
   .cal-today-btn{
     display:block;
     margin:0 auto 14px;
     background:none;
-    border:1.5px solid var(--wood);
-    color:var(--wood-2);
-    font-family:'Inter';
+    border:none;
+    color:var(--accent);
+    font-family:inherit;
     font-weight:600;
     font-size:12.5px;
-    padding:5px 14px;
-    border-radius:20px;
+    padding:4px;
     cursor:pointer;
   }
-  .cal-today-btn:hover{background:#FDF1E7;}
+  .cal-today-btn:hover{text-decoration:underline;}
   .cal-grid{
     display:grid;
     grid-template-columns:repeat(7,1fr);
@@ -487,20 +465,17 @@
   .cal-dow-row{margin-bottom:4px;}
   .cal-dow{
     text-align:center;
-    font-family:'Inter';
     font-size:11px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-    color:var(--text-soft);
+    font-weight:600;
+    color:var(--muted);
     padding-bottom:4px;
   }
   .cal-cell{
     position:relative;
     aspect-ratio:1 / 0.85;
-    background:var(--paper);
-    border:1.5px solid var(--line);
-    border-radius:8px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
     padding:6px;
     display:flex;
     flex-direction:column;
@@ -508,27 +483,27 @@
   }
   .cal-cell.empty{background:transparent; border-color:transparent;}
   .cal-daynum{
-    font-family:'Oswald';
+    font-variant-numeric:tabular-nums;
     font-size:13px;
     font-weight:600;
-    color:var(--text-soft);
+    color:var(--muted);
   }
-  .cal-cell.today .cal-daynum{color:var(--wood-2);}
-  .cal-cell.today{border-color:var(--wood);}
+  .cal-cell.today{border-color:var(--accent); border-width:1.5px;}
+  .cal-cell.today .cal-daynum{color:var(--accent);}
   .cal-cell.has-matches{cursor:pointer;}
-  .cal-cell.has-matches:hover{border-color:var(--ink-2); background:var(--ice);}
+  .cal-cell.has-matches:hover{border-color:var(--accent); background:var(--surface-2);}
   .cal-cell.has-matches .cal-daynum{color:var(--ink);}
   .cal-badge{
     margin-top:auto;
     align-self:flex-end;
-    background:var(--amber);
+    background:var(--accent);
     color:#fff;
-    font-family:'Oswald';
-    font-size:12px;
-    font-weight:700;
-    min-width:20px;
+    font-variant-numeric:tabular-nums;
+    font-size:11.5px;
+    font-weight:600;
+    min-width:18px;
     text-align:center;
-    border-radius:10px;
+    border-radius:999px;
     padding:1px 6px;
   }
   .cal-cell.selected{
@@ -540,34 +515,33 @@
   .cal-day-panel{margin-top:22px;}
   .cal-hint{
     text-align:center;
-    color:var(--text-soft);
+    color:var(--muted);
     font-size:13.5px;
     padding:30px 10px;
   }
   @media (max-width:520px){
     .cal-cell{padding:4px;}
-    .cal-badge{font-size:10.5px; padding:0 5px;}
-    .cal-title{font-size:17px; min-width:auto;}
+    .cal-badge{font-size:10px; padding:0 5px;}
+    .cal-title{font-size:16px; min-width:auto;}
   }
 
   footer{
-    max-width:980px;
+    max-width:760px;
     margin:0 auto;
     padding:20px 18px 40px;
     font-size:12px;
-    color:var(--text-soft);
-    border-top:1px solid var(--line);
+    color:var(--muted);
+    border-top:1px solid var(--border);
   }
-  footer a{color:var(--ink-2); text-decoration:underline;}
+  footer a{color:var(--accent);}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="top-inner">
-    <div class="kicker"><span class="puck"></span> AGENDA · TEMPORADA 2026/27</div>
     <h1 class="display">Hoquei Patins Catalunya</h1>
-    <div class="sub">Cerca i filtra els partits de la temporada. Eina no oficial (sense vincle amb la FECAPA), a partir de dades públiques de <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>.</div>
+    <div class="sub">Calendari no oficial de la temporada 2026/27, amb cerca i filtres. Dades públiques de <a href="https://www.hoqueipatins.fecapa.cat/ag/" target="_blank" rel="noopener">hoqueipatins.fecapa.cat</a>, sense cap vincle amb la FECAPA.</div>
     <div class="updated" id="updatedBadge">Carregant dades…</div>
   </div>
 </header>
@@ -599,20 +573,20 @@
         </div>
       </div>
     </div>
-    <select id="periodSelect">
-      <option value="upcoming">Properes jornades</option>
-      <option value="today">Avui</option>
-      <option value="all">Tota la temporada</option>
-      <option value="past">Jornades passades</option>
-    </select>
+    <div class="msel" id="periodMsel">
+      <button type="button" class="msel-btn" id="periodMselBtn">Properes jornades</button>
+      <div class="msel-panel" id="periodMselPanel" hidden>
+        <div class="msel-list" id="periodMselList"></div>
+      </div>
+    </div>
     <button class="reset-link" id="resetBtn">Neteja filtres</button>
   </div>
 </div>
 
 <div class="view-toggle-wrap">
   <div class="segmented" id="viewSeg">
-    <button data-view="list" class="active">📋 Llista</button>
-    <button data-view="calendar">🗓️ Calendari</button>
+    <button data-view="list" class="active">Llista</button>
+    <button data-view="calendar">Calendari</button>
   </div>
 </div>
 
@@ -648,7 +622,7 @@
       updatedBadge.textContent = 'No s\u2019han pogut carregar les dades';
       footerUpdated.textContent = 'desconeguda';
       resultsRootEarly.innerHTML =
-        '<div class="empty-state"><div class="big">\u26A0\uFE0F</div>' +
+        '<div class="empty-state">' +
         'No s\u2019ha pogut carregar <code>data.json</code>.<br>' +
         'Si has obert aquest fitxer fent doble clic des del disc, el navegador sol bloquejar aquesta lectura per seguretat.<br>' +
         'Puja aquesta carpeta a un allotjament est\u00e0tic (GitHub Pages, Netlify\u2026) o obre-la amb un servidor local, i tornar\u00e0 a funcionar.' +
@@ -659,6 +633,7 @@
   function boot(DATA){
   var COMPS = DATA.comps;
   var VENUES = DATA.venues;
+  var VENUE_INFO = DATA.venueInfo || [];
   var CLUBS = DATA.clubs; // [id, name]
   var RAW = DATA.matches; // [compIdx, date, time, home, away, score, venueIdx, club1, club2]
 
@@ -774,6 +749,30 @@
     }catch(e){ /* ignore */ }
   }
 
+  var PERIOD_KEY = 'agenda-hoquei-fecapa-periode';
+  var PERIOD_OPTIONS = [
+    ['upcoming', 'Properes jornades'],
+    ['today', 'Avui'],
+    ['all', 'Tota la temporada'],
+    ['past', 'Jornades passades']
+  ];
+
+  function loadPeriod(){
+    try{
+      var v = window.localStorage.getItem(PERIOD_KEY);
+      var valid = PERIOD_OPTIONS.some(function(o){ return o[0] === v; });
+      return valid ? v : 'upcoming';
+    }catch(e){
+      return 'upcoming';
+    }
+  }
+
+  function savePeriod(v){
+    try{
+      window.localStorage.setItem(PERIOD_KEY, v);
+    }catch(e){ /* ignore */ }
+  }
+
   var state = (function(){
     var favClubs = loadArray(FAV_CLUBS_KEY);
     var favCompNames = loadArray(FAV_COMPS_KEY);
@@ -784,7 +783,7 @@
       q: '',
       clubs: favClubs.slice(),
       comps: favCompIdxs.slice(),
-      period: 'upcoming',
+      period: loadPeriod(),
       visibleCount: 60,
       view: 'list',
       calMonth: startOfMonth(new Date()),
@@ -795,7 +794,7 @@
   var PAGE_SIZE = 60;
 
   var searchInput = document.getElementById('searchInput');
-  var periodSelect = document.getElementById('periodSelect');
+  var periodMsel = document.getElementById('periodMsel');
   var viewSeg = document.getElementById('viewSeg');
   var resetBtn = document.getElementById('resetBtn');
   var resultsRoot = document.getElementById('resultsRoot');
@@ -941,6 +940,57 @@
     }
   });
 
+  // ---- Single-select dropdown (period) ----
+  var periodMselBtn = document.getElementById('periodMselBtn');
+  var periodMselPanel = document.getElementById('periodMselPanel');
+  var periodMselList = document.getElementById('periodMselList');
+
+  function periodLabel(value){
+    for(var i=0;i<PERIOD_OPTIONS.length;i++){
+      if(PERIOD_OPTIONS[i][0] === value) return PERIOD_OPTIONS[i][1];
+    }
+    return PERIOD_OPTIONS[0][1];
+  }
+
+  function renderPeriodList(){
+    periodMselList.innerHTML = '';
+    PERIOD_OPTIONS.forEach(function(opt){
+      var row = document.createElement('div');
+      row.className = 'msel-row' + (state.period === opt[0] ? ' selected' : '');
+      var span = document.createElement('span');
+      span.textContent = opt[1];
+      row.appendChild(span);
+      row.addEventListener('click', function(){
+        state.period = opt[0];
+        savePeriod(opt[0]);
+        periodMselBtn.textContent = periodLabel(opt[0]);
+        closePeriodPanel();
+        state.visibleCount = PAGE_SIZE;
+        render();
+      });
+      periodMselList.appendChild(row);
+    });
+  }
+
+  function closePeriodPanel(){
+    periodMselPanel.hidden = true;
+  }
+
+  periodMselBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(periodMselPanel.hidden){
+      document.dispatchEvent(new CustomEvent('msel:closeall'));
+      renderPeriodList();
+      periodMselPanel.hidden = false;
+    } else {
+      closePeriodPanel();
+    }
+  });
+  periodMselPanel.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('msel:closeall', closePeriodPanel);
+
+  periodMselBtn.textContent = periodLabel(state.period);
+
   var debounceTimer = null;
   searchInput.addEventListener('input', function(){
     clearTimeout(debounceTimer);
@@ -952,28 +1002,23 @@
     }, 150);
   });
 
-  periodSelect.addEventListener('change', function(){
-    state.period = periodSelect.value;
-    state.visibleCount = PAGE_SIZE;
-    render();
-  });
-
   viewSeg.addEventListener('click', function(e){
     var btn = e.target.closest('button');
     if(!btn) return;
     Array.prototype.forEach.call(viewSeg.querySelectorAll('button'), function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
     state.view = btn.getAttribute('data-view');
-    periodSelect.style.display = (state.view === 'calendar') ? 'none' : '';
+    periodMsel.style.display = (state.view === 'calendar') ? 'none' : '';
     render();
   });
 
   resetBtn.addEventListener('click', function(){
     state.q = '';
     state.period = 'upcoming';
+    savePeriod('upcoming');
     state.visibleCount = PAGE_SIZE;
     searchInput.value = '';
-    periodSelect.value = 'upcoming';
+    periodMselBtn.textContent = periodLabel('upcoming');
     render();
   });
 
@@ -1037,7 +1082,18 @@
 
     var venueEl = document.createElement('div');
     venueEl.className = 'm-venue';
-    venueEl.textContent = VENUES[m.venueIdx];
+    var vInfo = VENUE_INFO[m.venueIdx];
+    if(vInfo){
+      var link = document.createElement('a');
+      link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(VENUES[m.venueIdx] + ', ' + vInfo[0]);
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.className = 'venue-link';
+      link.textContent = VENUES[m.venueIdx];
+      venueEl.appendChild(link);
+    } else {
+      venueEl.textContent = VENUES[m.venueIdx];
+    }
 
     var scoreEl = document.createElement('div');
     if(m.score){
@@ -1075,7 +1131,7 @@
     resultsRoot.innerHTML = '';
 
     if(filtered.length === 0){
-      resultsRoot.innerHTML = '<div class="empty-state"><div class="big">🏒</div>Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.</div>';
+      resultsRoot.innerHTML = '<div class="empty-state">Cap partit coincideix amb aquests filtres.<br>Prova de netejar-los o ampliar la cerca.</div>';
       return;
     }
 
